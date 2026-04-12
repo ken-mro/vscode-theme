@@ -1,24 +1,24 @@
 # vscode-theme<!-- omit in toc -->
-A tiny command-line switcher that applies VSCode UI color themes to either your workspace (`.vscode/settings.json`) or your global VSCode settings — with automatic backup of any existing `workbench.colorCustomizations` and a clean reset.
+VSCode の UI カラーテーマを、ワークスペース（`.vscode/settings.json`）またはグローバル設定に適用する小さなコマンドラインスイッチャーです。既存の `workbench.colorCustomizations` は自動でバックアップされ、リセット時にはきれいに復元されます。
 
-Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vscode-themes/)), including a Catppuccin-inspired dark/light pair (`frappe-teal` / `dawn-teal`) sharing a teal accent. Drop any other `<name>.json` file into your theme directory to add more.
+ダーク系・ライト系のテーマを標準で同梱しています（[.vscode-themes/](.vscode-themes/)）。ティールのアクセントを共有する Catppuccin インスパイアのダーク／ライトペア（`frappe-teal` / `dawn-teal`）も含まれています。任意の `<name>.json` をテーマディレクトリに置くだけで追加できます。
 
-> 日本語版: [README.ja.md](README.ja.md)
+> English version: [README.md](README.md)
 
 ---
 
-- [Theme previews](#theme-previews)
-- [Using themes as workspace identity markers](#using-themes-as-workspace-identity-markers)
-- [Installation](#installation)
-  - [macOS / Linux (bash / zsh)](#macos--linux-bash--zsh)
-  - [Windows (PowerShell)](#windows-powershell)
-- [Usage](#usage)
-- [How it works](#how-it-works)
-- [Files](#files)
-- [Version](#version)
-  - [How the version flows](#how-the-version-flows)
+- [テーマプレビュー](#テーマプレビュー)
+- [ワークスペースの識別マーカーとしてのテーマ活用](#ワークスペースの識別マーカーとしてのテーマ活用)
+- [インストール](#インストール)
+  - [macOS / Linux（bash / zsh）](#macos--linuxbash--zsh)
+  - [Windows（PowerShell）](#windowspowershell)
+- [使い方](#使い方)
+- [仕組み](#仕組み)
+- [ファイル構成](#ファイル構成)
+- [バージョン](#バージョン)
+  - [バージョンの伝わり方](#バージョンの伝わり方)
 
-## Theme previews
+## テーマプレビュー
 
 <style>
 .vsc-card .sb-item { cursor: pointer; transition: background .08s ease, color .08s ease; }
@@ -30,13 +30,13 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
 ### A &mdash; Navy + orange<!-- omit in toc -->
 
 
-> Dark navy background with orange accents.
+> ダークネイビーの背景にオレンジのアクセント。
 
 
 <div class="vsc-card" style="--hvr-bg:#FF990022;--hvr-fg:#8aa4c8;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;">
   <div title="titleBar.activeBackground &mdash; #1a2d4a" style="background:#1a2d4a;color:#c8d8f0;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #FF9900;">
     <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
-    <span title="titleBar.inactiveForeground &mdash; #5a7a9a" style="flex:1;text-align:center;font-size:11px;color:#5a7a9a;">vacode-theme &mdash; VS Code</span>
+    <span title="titleBar.inactiveForeground &mdash; #5a7a9a" style="flex:1;text-align:center;font-size:11px;color:#5a7a9a;">vscode-theme &mdash; VS Code</span>
   </div>
   <div style="display:flex;height:150px;">
     <div title="activityBar.background &mdash; #0f1e33" style="background:#0f1e33;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
@@ -45,7 +45,7 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
       <span title="activityBar.inactiveForeground &mdash; #3a5a7a" style="width:18px;height:18px;background:#3a5a7a;border-radius:3px;display:block;opacity:.55;"></span>
     </div>
     <div title="sideBar.background &mdash; #0d1b2e" style="background:#0d1b2e;width:160px;padding:8px 0;border-right:1px solid #1e3050;">
-      <div title="sideBarTitle.foreground &mdash; #FF9900" style="color:#FF9900;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div title="sideBarTitle.foreground &mdash; #FF9900" style="color:#FF9900;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">エクスプローラー</div>
       <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #FF9900" style="color:#FF9900;font-size:11px;padding:3px 10px 3px 22px;background:#FF990022;">settings.json</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #8aa4c8" style="color:#8aa4c8;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #8aa4c8" style="color:#8aa4c8;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
@@ -64,39 +64,39 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   </div>
   <div title="panel.background &mdash; #080f1e" style="background:#080f1e;">
     <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #1e3050;">
-      <span title="panelTitle.inactiveForeground &mdash; #2a3f5a" style="color:#2a3f5a;padding:0 0 6px;line-height:1;">PROBLEMS</span>
-      <span title="panelTitle.inactiveForeground &mdash; #2a3f5a" style="color:#2a3f5a;padding:0 0 6px;line-height:1;">OUTPUT</span>
-      <span title="panelTitle.inactiveForeground &mdash; #2a3f5a" style="color:#2a3f5a;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
-      <span title="panelTitle.activeForeground &mdash; #c8d8f0" style="color:#c8d8f0;padding:0 0 5px;line-height:1;border-bottom:1px solid #FF9900;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #2a3f5a" style="color:#2a3f5a;padding:0 0 6px;line-height:1;">問題</span>
+      <span title="panelTitle.inactiveForeground &mdash; #2a3f5a" style="color:#2a3f5a;padding:0 0 6px;line-height:1;">出力</span>
+      <span title="panelTitle.inactiveForeground &mdash; #2a3f5a" style="color:#2a3f5a;padding:0 0 6px;line-height:1;">デバッグ コンソール</span>
+      <span title="panelTitle.activeForeground &mdash; #c8d8f0" style="color:#c8d8f0;padding:0 0 5px;line-height:1;border-bottom:1px solid #FF9900;margin-bottom:-1px;">ターミナル</span>
       <span title="panelTitle.inactiveForeground &mdash; #2a3f5a" style="color:#2a3f5a;padding:0 0 6px;line-height:1;">GITLENS</span>
     </div>
     <div title="terminal.background &mdash; #080f1e" style="background:#080f1e;padding:10px 14px;color:#c8d8f0;font-size:11px;line-height:1.5;">
       <div><span title="terminal.foreground &mdash; #c8d8f0" style="color:#c8d8f0;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #c8d8f0" style="color:#c8d8f0;">vscode-theme set navy-orange</span></div>
-      <div><span title="VSCode default ansi green (theme has no terminal.ansiGreen) &mdash; #0DBC79" style="color:#0DBC79;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #c8d8f0" style="color:#c8d8f0;">Theme applied to workspace.</span></div>
+      <div><span title="VSCode default ansi green (theme has no terminal.ansiGreen) &mdash; #0DBC79" style="color:#0DBC79;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #c8d8f0" style="color:#c8d8f0;">テーマをワークスペースに適用しました。</span></div>
       <div><span title="terminal.foreground &mdash; #c8d8f0" style="color:#c8d8f0;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #FF9900" style="display:inline-block;width:7px;height:12px;background:#FF9900;vertical-align:text-bottom;"></span></div>
     </div>
   </div>
   <div title="statusBar.background &mdash; #1a2d4a" style="background:#1a2d4a;color:#c8d8f0;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #FF990055;">
     <span style="opacity:.85;">main</span>
-    <span style="opacity:.85;">No problems</span>
+    <span style="opacity:.85;">問題なし</span>
   </div>
 </div>
 
-**Theme name:** `navy-orange`  
-**Accent:** `#FF9900` &middot; **Background:** `#0a1628` &middot; **Title bar:** `#1a2d4a`
+**テーマ名:** `navy-orange`  
+**アクセント:** `#FF9900` &middot; **背景:** `#0a1628` &middot; **タイトルバー:** `#1a2d4a`
 
 ---
 
 ### B &mdash; Squid ink + yellow<!-- omit in toc -->
 
 
-> Deep squid-ink background with gold yellow accents.
+> 深いスクイッドインク（イカ墨）色の背景にゴールドイエローのアクセント。
 
 
 <div class="vsc-card" style="--hvr-bg:#FFD70022;--hvr-fg:#8899aa;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;">
   <div title="titleBar.activeBackground &mdash; #232f3e" style="background:#232f3e;color:#ccd8e8;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #FFD700;">
     <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
-    <span title="titleBar.inactiveForeground &mdash; #5a7080" style="flex:1;text-align:center;font-size:11px;color:#5a7080;">vacode-theme &mdash; VS Code</span>
+    <span title="titleBar.inactiveForeground &mdash; #5a7080" style="flex:1;text-align:center;font-size:11px;color:#5a7080;">vscode-theme &mdash; VS Code</span>
   </div>
   <div style="display:flex;height:150px;">
     <div title="activityBar.background &mdash; #1a2330" style="background:#1a2330;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
@@ -105,7 +105,7 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
       <span title="activityBar.inactiveForeground &mdash; #445566" style="width:18px;height:18px;background:#445566;border-radius:3px;display:block;opacity:.55;"></span>
     </div>
     <div title="sideBar.background &mdash; #1e2a38" style="background:#1e2a38;width:160px;padding:8px 0;border-right:1px solid #263040;">
-      <div title="sideBarTitle.foreground &mdash; #FFD700" style="color:#FFD700;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div title="sideBarTitle.foreground &mdash; #FFD700" style="color:#FFD700;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">エクスプローラー</div>
       <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #FFD700" style="color:#FFD700;font-size:11px;padding:3px 10px 3px 22px;background:#FFD70022;">settings.json</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #8899aa" style="color:#8899aa;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #8899aa" style="color:#8899aa;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
@@ -124,39 +124,39 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   </div>
   <div title="panel.background &mdash; #111820" style="background:#111820;">
     <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #263040;">
-      <span title="panelTitle.inactiveForeground &mdash; #334455" style="color:#334455;padding:0 0 6px;line-height:1;">PROBLEMS</span>
-      <span title="panelTitle.inactiveForeground &mdash; #334455" style="color:#334455;padding:0 0 6px;line-height:1;">OUTPUT</span>
-      <span title="panelTitle.inactiveForeground &mdash; #334455" style="color:#334455;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
-      <span title="panelTitle.activeForeground &mdash; #ccdde8" style="color:#ccdde8;padding:0 0 5px;line-height:1;border-bottom:1px solid #FFD700;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #334455" style="color:#334455;padding:0 0 6px;line-height:1;">問題</span>
+      <span title="panelTitle.inactiveForeground &mdash; #334455" style="color:#334455;padding:0 0 6px;line-height:1;">出力</span>
+      <span title="panelTitle.inactiveForeground &mdash; #334455" style="color:#334455;padding:0 0 6px;line-height:1;">デバッグ コンソール</span>
+      <span title="panelTitle.activeForeground &mdash; #ccdde8" style="color:#ccdde8;padding:0 0 5px;line-height:1;border-bottom:1px solid #FFD700;margin-bottom:-1px;">ターミナル</span>
       <span title="panelTitle.inactiveForeground &mdash; #334455" style="color:#334455;padding:0 0 6px;line-height:1;">GITLENS</span>
     </div>
     <div title="terminal.background &mdash; #111820" style="background:#111820;padding:10px 14px;color:#ccdde8;font-size:11px;line-height:1.5;">
       <div><span title="terminal.foreground &mdash; #ccdde8" style="color:#ccdde8;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #ccdde8" style="color:#ccdde8;">vscode-theme set squidink-yellow</span></div>
-      <div><span title="VSCode default ansi green (theme has no terminal.ansiGreen) &mdash; #0DBC79" style="color:#0DBC79;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #ccdde8" style="color:#ccdde8;">Theme applied to workspace.</span></div>
+      <div><span title="VSCode default ansi green (theme has no terminal.ansiGreen) &mdash; #0DBC79" style="color:#0DBC79;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #ccdde8" style="color:#ccdde8;">テーマをワークスペースに適用しました。</span></div>
       <div><span title="terminal.foreground &mdash; #ccdde8" style="color:#ccdde8;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #FFD700" style="display:inline-block;width:7px;height:12px;background:#FFD700;vertical-align:text-bottom;"></span></div>
     </div>
   </div>
   <div title="statusBar.background &mdash; #232f3e" style="background:#232f3e;color:#ccd8e8;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #FFD70055;">
     <span style="opacity:.85;">main</span>
-    <span style="opacity:.85;">No problems</span>
+    <span style="opacity:.85;">問題なし</span>
   </div>
 </div>
 
-**Theme name:** `squidink-yellow`  
-**Accent:** `#FFD700` &middot; **Background:** `#161e28` &middot; **Title bar:** `#232f3e`
+**テーマ名:** `squidink-yellow`  
+**アクセント:** `#FFD700` &middot; **背景:** `#161e28` &middot; **タイトルバー:** `#232f3e`
 
 ---
 
 ### C &mdash; Bedrock teal<!-- omit in toc -->
 
 
-> Dark teal with cyan-green accents.
+> ダークティールの背景にシアングリーンのアクセント。
 
 
 <div class="vsc-card" style="--hvr-bg:#01A88D22;--hvr-fg:#5a9090;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;">
   <div title="titleBar.activeBackground &mdash; #0d2b2b" style="background:#0d2b2b;color:#b8d8d4;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #01A88D;">
     <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
-    <span title="titleBar.inactiveForeground &mdash; #3a7070" style="flex:1;text-align:center;font-size:11px;color:#3a7070;">vacode-theme &mdash; VS Code</span>
+    <span title="titleBar.inactiveForeground &mdash; #3a7070" style="flex:1;text-align:center;font-size:11px;color:#3a7070;">vscode-theme &mdash; VS Code</span>
   </div>
   <div style="display:flex;height:150px;">
     <div title="activityBar.background &mdash; #081e1e" style="background:#081e1e;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
@@ -165,7 +165,7 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
       <span title="activityBar.inactiveForeground &mdash; #1a4040" style="width:18px;height:18px;background:#1a4040;border-radius:3px;display:block;opacity:.55;"></span>
     </div>
     <div title="sideBar.background &mdash; #0a2020" style="background:#0a2020;width:160px;padding:8px 0;border-right:1px solid #0f2a2a;">
-      <div title="sideBarTitle.foreground &mdash; #01A88D" style="color:#01A88D;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div title="sideBarTitle.foreground &mdash; #01A88D" style="color:#01A88D;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">エクスプローラー</div>
       <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #01A88D" style="color:#01A88D;font-size:11px;padding:3px 10px 3px 22px;background:#01A88D22;">settings.json</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #5a9090" style="color:#5a9090;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #5a9090" style="color:#5a9090;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
@@ -184,39 +184,39 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   </div>
   <div title="panel.background &mdash; #040e0e" style="background:#040e0e;">
     <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #0f2a2a;">
-      <span title="panelTitle.inactiveForeground &mdash; #1a3838" style="color:#1a3838;padding:0 0 6px;line-height:1;">PROBLEMS</span>
-      <span title="panelTitle.inactiveForeground &mdash; #1a3838" style="color:#1a3838;padding:0 0 6px;line-height:1;">OUTPUT</span>
-      <span title="panelTitle.inactiveForeground &mdash; #1a3838" style="color:#1a3838;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
-      <span title="panelTitle.activeForeground &mdash; #b8d8d4" style="color:#b8d8d4;padding:0 0 5px;line-height:1;border-bottom:1px solid #01A88D;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #1a3838" style="color:#1a3838;padding:0 0 6px;line-height:1;">問題</span>
+      <span title="panelTitle.inactiveForeground &mdash; #1a3838" style="color:#1a3838;padding:0 0 6px;line-height:1;">出力</span>
+      <span title="panelTitle.inactiveForeground &mdash; #1a3838" style="color:#1a3838;padding:0 0 6px;line-height:1;">デバッグ コンソール</span>
+      <span title="panelTitle.activeForeground &mdash; #b8d8d4" style="color:#b8d8d4;padding:0 0 5px;line-height:1;border-bottom:1px solid #01A88D;margin-bottom:-1px;">ターミナル</span>
       <span title="panelTitle.inactiveForeground &mdash; #1a3838" style="color:#1a3838;padding:0 0 6px;line-height:1;">GITLENS</span>
     </div>
     <div title="terminal.background &mdash; #040e0e" style="background:#040e0e;padding:10px 14px;color:#b8d8d4;font-size:11px;line-height:1.5;">
       <div><span title="terminal.foreground &mdash; #b8d8d4" style="color:#b8d8d4;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #b8d8d4" style="color:#b8d8d4;">vscode-theme set bedrock-teal</span></div>
-      <div><span title="terminal.ansiGreen &mdash; #01A88D" style="color:#01A88D;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #b8d8d4" style="color:#b8d8d4;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #01A88D" style="color:#01A88D;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #b8d8d4" style="color:#b8d8d4;">テーマをワークスペースに適用しました。</span></div>
       <div><span title="terminal.foreground &mdash; #b8d8d4" style="color:#b8d8d4;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #01A88D" style="display:inline-block;width:7px;height:12px;background:#01A88D;vertical-align:text-bottom;"></span></div>
     </div>
   </div>
   <div title="statusBar.background &mdash; #0d2b2b" style="background:#0d2b2b;color:#b8d8d4;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #01A88D55;">
     <span style="opacity:.85;">main</span>
-    <span style="opacity:.85;">No problems</span>
+    <span style="opacity:.85;">問題なし</span>
   </div>
 </div>
 
-**Theme name:** `bedrock-teal`  
-**Accent:** `#01A88D` &middot; **Background:** `#061616` &middot; **Title bar:** `#0d2b2b`
+**テーマ名:** `bedrock-teal`  
+**アクセント:** `#01A88D` &middot; **背景:** `#061616` &middot; **タイトルバー:** `#0d2b2b`
 
 ---
 
 ### D &mdash; Dark + ember red<!-- omit in toc -->
 
 
-> Very dark background with ember red accents — hard to mistake for any other window.
+> 非常に暗い背景にエンバー（残り火）レッドのアクセント。他のウィンドウと見間違えようのない配色。
 
 
 <div class="vsc-card" style="--hvr-bg:#E8441A22;--hvr-fg:#886655;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;">
   <div title="titleBar.activeBackground &mdash; #1e1410" style="background:#1e1410;color:#e8d8c8;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #E8441A;">
     <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
-    <span title="titleBar.inactiveForeground &mdash; #6a5040" style="flex:1;text-align:center;font-size:11px;color:#6a5040;">vacode-theme &mdash; VS Code</span>
+    <span title="titleBar.inactiveForeground &mdash; #6a5040" style="flex:1;text-align:center;font-size:11px;color:#6a5040;">vscode-theme &mdash; VS Code</span>
   </div>
   <div style="display:flex;height:150px;">
     <div title="activityBar.background &mdash; #140e0a" style="background:#140e0a;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
@@ -225,7 +225,7 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
       <span title="activityBar.inactiveForeground &mdash; #3a2818" style="width:18px;height:18px;background:#3a2818;border-radius:3px;display:block;opacity:.55;"></span>
     </div>
     <div title="sideBar.background &mdash; #181008" style="background:#181008;width:160px;padding:8px 0;border-right:1px solid #241810;">
-      <div title="sideBarTitle.foreground &mdash; #E8441A" style="color:#E8441A;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div title="sideBarTitle.foreground &mdash; #E8441A" style="color:#E8441A;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">エクスプローラー</div>
       <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #E8441A" style="color:#E8441A;font-size:11px;padding:3px 10px 3px 22px;background:#E8441A22;">settings.json</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #886655" style="color:#886655;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #886655" style="color:#886655;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
@@ -244,39 +244,39 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   </div>
   <div title="panel.background &mdash; #0c0804" style="background:#0c0804;">
     <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #241810;">
-      <span title="panelTitle.inactiveForeground &mdash; #2a1e14" style="color:#2a1e14;padding:0 0 6px;line-height:1;">PROBLEMS</span>
-      <span title="panelTitle.inactiveForeground &mdash; #2a1e14" style="color:#2a1e14;padding:0 0 6px;line-height:1;">OUTPUT</span>
-      <span title="panelTitle.inactiveForeground &mdash; #2a1e14" style="color:#2a1e14;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
-      <span title="panelTitle.activeForeground &mdash; #e8d8c8" style="color:#e8d8c8;padding:0 0 5px;line-height:1;border-bottom:1px solid #E8441A;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #2a1e14" style="color:#2a1e14;padding:0 0 6px;line-height:1;">問題</span>
+      <span title="panelTitle.inactiveForeground &mdash; #2a1e14" style="color:#2a1e14;padding:0 0 6px;line-height:1;">出力</span>
+      <span title="panelTitle.inactiveForeground &mdash; #2a1e14" style="color:#2a1e14;padding:0 0 6px;line-height:1;">デバッグ コンソール</span>
+      <span title="panelTitle.activeForeground &mdash; #e8d8c8" style="color:#e8d8c8;padding:0 0 5px;line-height:1;border-bottom:1px solid #E8441A;margin-bottom:-1px;">ターミナル</span>
       <span title="panelTitle.inactiveForeground &mdash; #2a1e14" style="color:#2a1e14;padding:0 0 6px;line-height:1;">GITLENS</span>
     </div>
     <div title="terminal.background &mdash; #0c0804" style="background:#0c0804;padding:10px 14px;color:#e8d8c8;font-size:11px;line-height:1.5;">
       <div><span title="terminal.foreground &mdash; #e8d8c8" style="color:#e8d8c8;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #e8d8c8" style="color:#e8d8c8;">vscode-theme set dark-ember</span></div>
-      <div><span title="VSCode default ansi green (theme has no terminal.ansiGreen) &mdash; #0DBC79" style="color:#0DBC79;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #e8d8c8" style="color:#e8d8c8;">Theme applied to workspace.</span></div>
+      <div><span title="VSCode default ansi green (theme has no terminal.ansiGreen) &mdash; #0DBC79" style="color:#0DBC79;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #e8d8c8" style="color:#e8d8c8;">テーマをワークスペースに適用しました。</span></div>
       <div><span title="terminal.foreground &mdash; #e8d8c8" style="color:#e8d8c8;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #E8441A" style="display:inline-block;width:7px;height:12px;background:#E8441A;vertical-align:text-bottom;"></span></div>
     </div>
   </div>
   <div title="statusBar.background &mdash; #1e1410" style="background:#1e1410;color:#e8d8c8;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #E8441A55;">
     <span style="opacity:.85;">main</span>
-    <span style="opacity:.85;">No problems</span>
+    <span style="opacity:.85;">問題なし</span>
   </div>
 </div>
 
-**Theme name:** `dark-ember`  
-**Accent:** `#E8441A` &middot; **Background:** `#100c08` &middot; **Title bar:** `#1e1410`
+**テーマ名:** `dark-ember`  
+**アクセント:** `#E8441A` &middot; **背景:** `#100c08` &middot; **タイトルバー:** `#1e1410`
 
 ---
 
 ### E &mdash; Forest green<!-- omit in toc -->
 
 
-> Deep woodland background with a vivid spring-green accent.
+> 深い森林色の背景に、鮮やかなスプリンググリーンのアクセント。
 
 
 <div class="vsc-card" style="--hvr-bg:#4ADE8014;--hvr-fg:#c8e8d0;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;">
   <div title="titleBar.activeBackground &mdash; #14322a" style="background:#14322a;color:#c8e8d0;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #4ADE80;">
     <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
-    <span title="titleBar.inactiveForeground &mdash; #5a8070" style="flex:1;text-align:center;font-size:11px;color:#5a8070;">vacode-theme &mdash; VS Code</span>
+    <span title="titleBar.inactiveForeground &mdash; #5a8070" style="flex:1;text-align:center;font-size:11px;color:#5a8070;">vscode-theme &mdash; VS Code</span>
   </div>
   <div style="display:flex;height:150px;">
     <div title="activityBar.background &mdash; #0d1f18" style="background:#0d1f18;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
@@ -285,7 +285,7 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
       <span title="activityBar.inactiveForeground &mdash; #5a8070" style="width:18px;height:18px;background:#5a8070;border-radius:3px;display:block;opacity:.55;"></span>
     </div>
     <div title="sideBar.background &mdash; #0c1d14" style="background:#0c1d14;width:160px;padding:8px 0;border-right:1px solid #1a3528;">
-      <div title="sideBarTitle.foreground &mdash; #4ADE80" style="color:#4ADE80;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div title="sideBarTitle.foreground &mdash; #4ADE80" style="color:#4ADE80;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">エクスプローラー</div>
       <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #4ADE80" style="color:#4ADE80;font-size:11px;padding:3px 10px 3px 22px;background:#4ADE8022;">settings.json</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #c8e8d0" style="color:#c8e8d0;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #c8e8d0" style="color:#c8e8d0;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
@@ -304,39 +304,39 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   </div>
   <div title="panel.background &mdash; #08150c" style="background:#08150c;">
     <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #1a3528;">
-      <span title="panelTitle.inactiveForeground &mdash; #8abba0" style="color:#8abba0;padding:0 0 6px;line-height:1;">PROBLEMS</span>
-      <span title="panelTitle.inactiveForeground &mdash; #8abba0" style="color:#8abba0;padding:0 0 6px;line-height:1;">OUTPUT</span>
-      <span title="panelTitle.inactiveForeground &mdash; #8abba0" style="color:#8abba0;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
-      <span title="panelTitle.activeForeground &mdash; #c8e8d0" style="color:#c8e8d0;padding:0 0 5px;line-height:1;border-bottom:1px solid #4ADE80;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #8abba0" style="color:#8abba0;padding:0 0 6px;line-height:1;">問題</span>
+      <span title="panelTitle.inactiveForeground &mdash; #8abba0" style="color:#8abba0;padding:0 0 6px;line-height:1;">出力</span>
+      <span title="panelTitle.inactiveForeground &mdash; #8abba0" style="color:#8abba0;padding:0 0 6px;line-height:1;">デバッグ コンソール</span>
+      <span title="panelTitle.activeForeground &mdash; #c8e8d0" style="color:#c8e8d0;padding:0 0 5px;line-height:1;border-bottom:1px solid #4ADE80;margin-bottom:-1px;">ターミナル</span>
       <span title="panelTitle.inactiveForeground &mdash; #8abba0" style="color:#8abba0;padding:0 0 6px;line-height:1;">GITLENS</span>
     </div>
     <div title="terminal.background &mdash; #08150c" style="background:#08150c;padding:10px 14px;color:#c8e8d0;font-size:11px;line-height:1.5;">
       <div><span title="terminal.foreground &mdash; #c8e8d0" style="color:#c8e8d0;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #c8e8d0" style="color:#c8e8d0;">vscode-theme set forest-green</span></div>
-      <div><span title="terminal.ansiGreen &mdash; #4ADE80" style="color:#4ADE80;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #c8e8d0" style="color:#c8e8d0;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #4ADE80" style="color:#4ADE80;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #c8e8d0" style="color:#c8e8d0;">テーマをワークスペースに適用しました。</span></div>
       <div><span title="terminal.foreground &mdash; #c8e8d0" style="color:#c8e8d0;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #4ADE80" style="display:inline-block;width:7px;height:12px;background:#4ADE80;vertical-align:text-bottom;"></span></div>
     </div>
   </div>
   <div title="statusBar.background &mdash; #14322a" style="background:#14322a;color:#c8e8d0;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #4ADE8055;">
     <span style="opacity:.85;">main</span>
-    <span style="opacity:.85;">No problems</span>
+    <span style="opacity:.85;">問題なし</span>
   </div>
 </div>
 
-**Theme name:** `forest-green`  
-**Accent:** `#4ADE80` &middot; **Background:** `#0a1a0f` &middot; **Title bar:** `#14322a`
+**テーマ名:** `forest-green`  
+**アクセント:** `#4ADE80` &middot; **背景:** `#0a1a0f` &middot; **タイトルバー:** `#14322a`
 
 ---
 
 ### F &mdash; Royal purple<!-- omit in toc -->
 
 
-> Dark plum background with a rich violet accent.
+> ダークプラム（濃い紫）の背景に、深いバイオレットのアクセント。
 
 
 <div class="vsc-card" style="--hvr-bg:#A855F714;--hvr-fg:#e0d0f5;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;">
   <div title="titleBar.activeBackground &mdash; #2a1a4a" style="background:#2a1a4a;color:#e0d0f5;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #A855F7;">
     <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
-    <span title="titleBar.inactiveForeground &mdash; #7a5fa0" style="flex:1;text-align:center;font-size:11px;color:#7a5fa0;">vacode-theme &mdash; VS Code</span>
+    <span title="titleBar.inactiveForeground &mdash; #7a5fa0" style="flex:1;text-align:center;font-size:11px;color:#7a5fa0;">vscode-theme &mdash; VS Code</span>
   </div>
   <div style="display:flex;height:150px;">
     <div title="activityBar.background &mdash; #1a1033" style="background:#1a1033;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
@@ -345,7 +345,7 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
       <span title="activityBar.inactiveForeground &mdash; #7a5fa0" style="width:18px;height:18px;background:#7a5fa0;border-radius:3px;display:block;opacity:.55;"></span>
     </div>
     <div title="sideBar.background &mdash; #160d2b" style="background:#160d2b;width:160px;padding:8px 0;border-right:1px solid #2a1a4a;">
-      <div title="sideBarTitle.foreground &mdash; #A855F7" style="color:#A855F7;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div title="sideBarTitle.foreground &mdash; #A855F7" style="color:#A855F7;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">エクスプローラー</div>
       <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #A855F7" style="color:#A855F7;font-size:11px;padding:3px 10px 3px 22px;background:#A855F722;">settings.json</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #e0d0f5" style="color:#e0d0f5;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #e0d0f5" style="color:#e0d0f5;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
@@ -364,39 +364,39 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   </div>
   <div title="panel.background &mdash; #0e0818" style="background:#0e0818;">
     <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #2a1a4a;">
-      <span title="panelTitle.inactiveForeground &mdash; #a898c8" style="color:#a898c8;padding:0 0 6px;line-height:1;">PROBLEMS</span>
-      <span title="panelTitle.inactiveForeground &mdash; #a898c8" style="color:#a898c8;padding:0 0 6px;line-height:1;">OUTPUT</span>
-      <span title="panelTitle.inactiveForeground &mdash; #a898c8" style="color:#a898c8;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
-      <span title="panelTitle.activeForeground &mdash; #e0d0f5" style="color:#e0d0f5;padding:0 0 5px;line-height:1;border-bottom:1px solid #A855F7;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a898c8" style="color:#a898c8;padding:0 0 6px;line-height:1;">問題</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a898c8" style="color:#a898c8;padding:0 0 6px;line-height:1;">出力</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a898c8" style="color:#a898c8;padding:0 0 6px;line-height:1;">デバッグ コンソール</span>
+      <span title="panelTitle.activeForeground &mdash; #e0d0f5" style="color:#e0d0f5;padding:0 0 5px;line-height:1;border-bottom:1px solid #A855F7;margin-bottom:-1px;">ターミナル</span>
       <span title="panelTitle.inactiveForeground &mdash; #a898c8" style="color:#a898c8;padding:0 0 6px;line-height:1;">GITLENS</span>
     </div>
     <div title="terminal.background &mdash; #0e0818" style="background:#0e0818;padding:10px 14px;color:#e0d0f5;font-size:11px;line-height:1.5;">
       <div><span title="terminal.foreground &mdash; #e0d0f5" style="color:#e0d0f5;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #e0d0f5" style="color:#e0d0f5;">vscode-theme set royal-purple</span></div>
-      <div><span title="terminal.ansiGreen &mdash; #86EFAC" style="color:#86EFAC;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #e0d0f5" style="color:#e0d0f5;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #86EFAC" style="color:#86EFAC;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #e0d0f5" style="color:#e0d0f5;">テーマをワークスペースに適用しました。</span></div>
       <div><span title="terminal.foreground &mdash; #e0d0f5" style="color:#e0d0f5;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #A855F7" style="display:inline-block;width:7px;height:12px;background:#A855F7;vertical-align:text-bottom;"></span></div>
     </div>
   </div>
   <div title="statusBar.background &mdash; #2a1a4a" style="background:#2a1a4a;color:#e0d0f5;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #A855F755;">
     <span style="opacity:.85;">main</span>
-    <span style="opacity:.85;">No problems</span>
+    <span style="opacity:.85;">問題なし</span>
   </div>
 </div>
 
-**Theme name:** `royal-purple`  
-**Accent:** `#A855F7` &middot; **Background:** `#120a1f` &middot; **Title bar:** `#2a1a4a`
+**テーマ名:** `royal-purple`  
+**アクセント:** `#A855F7` &middot; **背景:** `#120a1f` &middot; **タイトルバー:** `#2a1a4a`
 
 ---
 
 ### G &mdash; Ocean blue<!-- omit in toc -->
 
 
-> Deep ocean background with a bright sky-cyan accent.
+> 深海色の背景に、明るいスカイシアンのアクセント。
 
 
 <div class="vsc-card" style="--hvr-bg:#38BDF814;--hvr-fg:#c8e0f5;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;">
   <div title="titleBar.activeBackground &mdash; #0e2a44" style="background:#0e2a44;color:#c8e0f5;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #38BDF8;">
     <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
-    <span title="titleBar.inactiveForeground &mdash; #5a8098" style="flex:1;text-align:center;font-size:11px;color:#5a8098;">vacode-theme &mdash; VS Code</span>
+    <span title="titleBar.inactiveForeground &mdash; #5a8098" style="flex:1;text-align:center;font-size:11px;color:#5a8098;">vscode-theme &mdash; VS Code</span>
   </div>
   <div style="display:flex;height:150px;">
     <div title="activityBar.background &mdash; #091c2e" style="background:#091c2e;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
@@ -405,7 +405,7 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
       <span title="activityBar.inactiveForeground &mdash; #5a8098" style="width:18px;height:18px;background:#5a8098;border-radius:3px;display:block;opacity:.55;"></span>
     </div>
     <div title="sideBar.background &mdash; #081e32" style="background:#081e32;width:160px;padding:8px 0;border-right:1px solid #14334a;">
-      <div title="sideBarTitle.foreground &mdash; #38BDF8" style="color:#38BDF8;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div title="sideBarTitle.foreground &mdash; #38BDF8" style="color:#38BDF8;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">エクスプローラー</div>
       <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #38BDF8" style="color:#38BDF8;font-size:11px;padding:3px 10px 3px 22px;background:#38BDF822;">settings.json</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #c8e0f5" style="color:#c8e0f5;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #c8e0f5" style="color:#c8e0f5;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
@@ -424,39 +424,39 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   </div>
   <div title="panel.background &mdash; #04101c" style="background:#04101c;">
     <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #14334a;">
-      <span title="panelTitle.inactiveForeground &mdash; #8ab4c8" style="color:#8ab4c8;padding:0 0 6px;line-height:1;">PROBLEMS</span>
-      <span title="panelTitle.inactiveForeground &mdash; #8ab4c8" style="color:#8ab4c8;padding:0 0 6px;line-height:1;">OUTPUT</span>
-      <span title="panelTitle.inactiveForeground &mdash; #8ab4c8" style="color:#8ab4c8;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
-      <span title="panelTitle.activeForeground &mdash; #c8e0f5" style="color:#c8e0f5;padding:0 0 5px;line-height:1;border-bottom:1px solid #38BDF8;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #8ab4c8" style="color:#8ab4c8;padding:0 0 6px;line-height:1;">問題</span>
+      <span title="panelTitle.inactiveForeground &mdash; #8ab4c8" style="color:#8ab4c8;padding:0 0 6px;line-height:1;">出力</span>
+      <span title="panelTitle.inactiveForeground &mdash; #8ab4c8" style="color:#8ab4c8;padding:0 0 6px;line-height:1;">デバッグ コンソール</span>
+      <span title="panelTitle.activeForeground &mdash; #c8e0f5" style="color:#c8e0f5;padding:0 0 5px;line-height:1;border-bottom:1px solid #38BDF8;margin-bottom:-1px;">ターミナル</span>
       <span title="panelTitle.inactiveForeground &mdash; #8ab4c8" style="color:#8ab4c8;padding:0 0 6px;line-height:1;">GITLENS</span>
     </div>
     <div title="terminal.background &mdash; #04101c" style="background:#04101c;padding:10px 14px;color:#c8e0f5;font-size:11px;line-height:1.5;">
       <div><span title="terminal.foreground &mdash; #c8e0f5" style="color:#c8e0f5;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #c8e0f5" style="color:#c8e0f5;">vscode-theme set ocean-blue</span></div>
-      <div><span title="terminal.ansiGreen &mdash; #5eead4" style="color:#5eead4;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #c8e0f5" style="color:#c8e0f5;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #5eead4" style="color:#5eead4;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #c8e0f5" style="color:#c8e0f5;">テーマをワークスペースに適用しました。</span></div>
       <div><span title="terminal.foreground &mdash; #c8e0f5" style="color:#c8e0f5;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #38BDF8" style="display:inline-block;width:7px;height:12px;background:#38BDF8;vertical-align:text-bottom;"></span></div>
     </div>
   </div>
   <div title="statusBar.background &mdash; #0e2a44" style="background:#0e2a44;color:#c8e0f5;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #38BDF855;">
     <span style="opacity:.85;">main</span>
-    <span style="opacity:.85;">No problems</span>
+    <span style="opacity:.85;">問題なし</span>
   </div>
 </div>
 
-**Theme name:** `ocean-blue`  
-**Accent:** `#38BDF8` &middot; **Background:** `#061624` &middot; **Title bar:** `#0e2a44`
+**テーマ名:** `ocean-blue`  
+**アクセント:** `#38BDF8` &middot; **背景:** `#061624` &middot; **タイトルバー:** `#0e2a44`
 
 ---
 
 ### H &mdash; Rose magenta<!-- omit in toc -->
 
 
-> Dark wine background with a hot-pink magenta accent.
+> ダークワイン色の背景に、ホットピンク寄りのマゼンタのアクセント。
 
 
 <div class="vsc-card" style="--hvr-bg:#EC489914;--hvr-fg:#f5d0e0;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;">
   <div title="titleBar.activeBackground &mdash; #3a0f28" style="background:#3a0f28;color:#f5d0e0;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #EC4899;">
     <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
-    <span title="titleBar.inactiveForeground &mdash; #985a78" style="flex:1;text-align:center;font-size:11px;color:#985a78;">vacode-theme &mdash; VS Code</span>
+    <span title="titleBar.inactiveForeground &mdash; #985a78" style="flex:1;text-align:center;font-size:11px;color:#985a78;">vscode-theme &mdash; VS Code</span>
   </div>
   <div style="display:flex;height:150px;">
     <div title="activityBar.background &mdash; #25091a" style="background:#25091a;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
@@ -465,7 +465,7 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
       <span title="activityBar.inactiveForeground &mdash; #985a78" style="width:18px;height:18px;background:#985a78;border-radius:3px;display:block;opacity:.55;"></span>
     </div>
     <div title="sideBar.background &mdash; #22091a" style="background:#22091a;width:160px;padding:8px 0;border-right:1px solid #3a0f28;">
-      <div title="sideBarTitle.foreground &mdash; #EC4899" style="color:#EC4899;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div title="sideBarTitle.foreground &mdash; #EC4899" style="color:#EC4899;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">エクスプローラー</div>
       <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #EC4899" style="color:#EC4899;font-size:11px;padding:3px 10px 3px 22px;background:#EC489922;">settings.json</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #f5d0e0" style="color:#f5d0e0;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #f5d0e0" style="color:#f5d0e0;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
@@ -484,39 +484,39 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   </div>
   <div title="panel.background &mdash; #14070f" style="background:#14070f;">
     <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #3a0f28;">
-      <span title="panelTitle.inactiveForeground &mdash; #c898b0" style="color:#c898b0;padding:0 0 6px;line-height:1;">PROBLEMS</span>
-      <span title="panelTitle.inactiveForeground &mdash; #c898b0" style="color:#c898b0;padding:0 0 6px;line-height:1;">OUTPUT</span>
-      <span title="panelTitle.inactiveForeground &mdash; #c898b0" style="color:#c898b0;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
-      <span title="panelTitle.activeForeground &mdash; #f5d0e0" style="color:#f5d0e0;padding:0 0 5px;line-height:1;border-bottom:1px solid #EC4899;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #c898b0" style="color:#c898b0;padding:0 0 6px;line-height:1;">問題</span>
+      <span title="panelTitle.inactiveForeground &mdash; #c898b0" style="color:#c898b0;padding:0 0 6px;line-height:1;">出力</span>
+      <span title="panelTitle.inactiveForeground &mdash; #c898b0" style="color:#c898b0;padding:0 0 6px;line-height:1;">デバッグ コンソール</span>
+      <span title="panelTitle.activeForeground &mdash; #f5d0e0" style="color:#f5d0e0;padding:0 0 5px;line-height:1;border-bottom:1px solid #EC4899;margin-bottom:-1px;">ターミナル</span>
       <span title="panelTitle.inactiveForeground &mdash; #c898b0" style="color:#c898b0;padding:0 0 6px;line-height:1;">GITLENS</span>
     </div>
     <div title="terminal.background &mdash; #14070f" style="background:#14070f;padding:10px 14px;color:#f5d0e0;font-size:11px;line-height:1.5;">
       <div><span title="terminal.foreground &mdash; #f5d0e0" style="color:#f5d0e0;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #f5d0e0" style="color:#f5d0e0;">vscode-theme set rose-magenta</span></div>
-      <div><span title="terminal.ansiGreen &mdash; #86EFAC" style="color:#86EFAC;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #f5d0e0" style="color:#f5d0e0;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #86EFAC" style="color:#86EFAC;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #f5d0e0" style="color:#f5d0e0;">テーマをワークスペースに適用しました。</span></div>
       <div><span title="terminal.foreground &mdash; #f5d0e0" style="color:#f5d0e0;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #EC4899" style="display:inline-block;width:7px;height:12px;background:#EC4899;vertical-align:text-bottom;"></span></div>
     </div>
   </div>
   <div title="statusBar.background &mdash; #3a0f28" style="background:#3a0f28;color:#f5d0e0;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #EC489955;">
     <span style="opacity:.85;">main</span>
-    <span style="opacity:.85;">No problems</span>
+    <span style="opacity:.85;">問題なし</span>
   </div>
 </div>
 
-**Theme name:** `rose-magenta`  
-**Accent:** `#EC4899` &middot; **Background:** `#1a0a14` &middot; **Title bar:** `#3a0f28`
+**テーマ名:** `rose-magenta`  
+**アクセント:** `#EC4899` &middot; **背景:** `#1a0a14` &middot; **タイトルバー:** `#3a0f28`
 
 ---
 
 ### I &mdash; Paper light<!-- omit in toc -->
 
 
-> Warm cream paper background with a sepia-brown accent. A light theme for daylight coding.
+> 温かみのあるクリーム色の紙の背景に、セピアブラウンのアクセント。昼間のコーディング向けのライトテーマ。
 
 
 <div class="vsc-card" style="--hvr-bg:#A0522D14;--hvr-fg:#3a2818;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;border:1px solid #D8CFB8;">
   <div title="titleBar.activeBackground &mdash; #E8DFCC" style="background:#E8DFCC;color:#3a2818;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #A0522D;">
     <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
-    <span title="titleBar.inactiveForeground &mdash; #8a7560" style="flex:1;text-align:center;font-size:11px;color:#8a7560;">vacode-theme &mdash; VS Code</span>
+    <span title="titleBar.inactiveForeground &mdash; #8a7560" style="flex:1;text-align:center;font-size:11px;color:#8a7560;">vscode-theme &mdash; VS Code</span>
   </div>
   <div style="display:flex;height:150px;">
     <div title="activityBar.background &mdash; #F0EADC" style="background:#F0EADC;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
@@ -525,7 +525,7 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
       <span title="activityBar.inactiveForeground &mdash; #8a7560" style="width:18px;height:18px;background:#8a7560;border-radius:3px;display:block;opacity:.55;"></span>
     </div>
     <div title="sideBar.background &mdash; #F5F0E2" style="background:#F5F0E2;width:160px;padding:8px 0;border-right:1px solid #D8CFB8;">
-      <div title="sideBarTitle.foreground &mdash; #A0522D" style="color:#A0522D;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div title="sideBarTitle.foreground &mdash; #A0522D" style="color:#A0522D;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">エクスプローラー</div>
       <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #A0522D" style="color:#A0522D;font-size:11px;padding:3px 10px 3px 22px;background:#A0522D22;">settings.json</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #3a2818" style="color:#3a2818;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #3a2818" style="color:#3a2818;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
@@ -544,39 +544,39 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   </div>
   <div title="panel.background &mdash; #F5F0E2" style="background:#F5F0E2;">
     <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #D8CFB8;">
-      <span title="panelTitle.inactiveForeground &mdash; #8a7560" style="color:#8a7560;padding:0 0 6px;line-height:1;">PROBLEMS</span>
-      <span title="panelTitle.inactiveForeground &mdash; #8a7560" style="color:#8a7560;padding:0 0 6px;line-height:1;">OUTPUT</span>
-      <span title="panelTitle.inactiveForeground &mdash; #8a7560" style="color:#8a7560;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
-      <span title="panelTitle.activeForeground &mdash; #3a2818" style="color:#3a2818;padding:0 0 5px;line-height:1;border-bottom:1px solid #A0522D;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #8a7560" style="color:#8a7560;padding:0 0 6px;line-height:1;">問題</span>
+      <span title="panelTitle.inactiveForeground &mdash; #8a7560" style="color:#8a7560;padding:0 0 6px;line-height:1;">出力</span>
+      <span title="panelTitle.inactiveForeground &mdash; #8a7560" style="color:#8a7560;padding:0 0 6px;line-height:1;">デバッグ コンソール</span>
+      <span title="panelTitle.activeForeground &mdash; #3a2818" style="color:#3a2818;padding:0 0 5px;line-height:1;border-bottom:1px solid #A0522D;margin-bottom:-1px;">ターミナル</span>
       <span title="panelTitle.inactiveForeground &mdash; #8a7560" style="color:#8a7560;padding:0 0 6px;line-height:1;">GITLENS</span>
     </div>
     <div title="terminal.background &mdash; #F5F0E2" style="background:#F5F0E2;padding:10px 14px;color:#3a2818;font-size:11px;line-height:1.5;">
       <div><span title="terminal.foreground &mdash; #3a2818" style="color:#3a2818;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #3a2818" style="color:#3a2818;">vscode-theme set paper-light</span></div>
-      <div><span title="terminal.ansiGreen &mdash; #3D6B2E" style="color:#3D6B2E;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #3a2818" style="color:#3a2818;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #3D6B2E" style="color:#3D6B2E;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #3a2818" style="color:#3a2818;">テーマをワークスペースに適用しました。</span></div>
       <div><span title="terminal.foreground &mdash; #3a2818" style="color:#3a2818;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #A0522D" style="display:inline-block;width:7px;height:12px;background:#A0522D;vertical-align:text-bottom;"></span></div>
     </div>
   </div>
   <div title="statusBar.background &mdash; #E8DFCC" style="background:#E8DFCC;color:#3a2818;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #A0522D55;">
     <span style="opacity:.85;">main</span>
-    <span style="opacity:.85;">No problems</span>
+    <span style="opacity:.85;">問題なし</span>
   </div>
 </div>
 
-**Theme name:** `paper-light`  
-**Accent:** `#A0522D` &middot; **Background:** `#FAF6EE` &middot; **Title bar:** `#E8DFCC`
+**テーマ名:** `paper-light`  
+**アクセント:** `#A0522D` &middot; **背景:** `#FAF6EE` &middot; **タイトルバー:** `#E8DFCC`
 
 ---
 
 ### J &mdash; Arctic light<!-- omit in toc -->
 
 
-> Cool frost-white background with a crisp steel-blue accent. A light theme with quiet contrast.
+> 冷たいフロストホワイトの背景に、シャープなスチールブルーのアクセント。コントラスト控えめのライトテーマ。
 
 
 <div class="vsc-card" style="--hvr-bg:#2563EB14;--hvr-fg:#1e3a5f;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;border:1px solid #CCD8EA;">
   <div title="titleBar.activeBackground &mdash; #DCE6F2" style="background:#DCE6F2;color:#1e3a5f;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #2563EB;">
     <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
-    <span title="titleBar.inactiveForeground &mdash; #6080a5" style="flex:1;text-align:center;font-size:11px;color:#6080a5;">vacode-theme &mdash; VS Code</span>
+    <span title="titleBar.inactiveForeground &mdash; #6080a5" style="flex:1;text-align:center;font-size:11px;color:#6080a5;">vscode-theme &mdash; VS Code</span>
   </div>
   <div style="display:flex;height:150px;">
     <div title="activityBar.background &mdash; #E8EEF7" style="background:#E8EEF7;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
@@ -585,7 +585,7 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
       <span title="activityBar.inactiveForeground &mdash; #6080a5" style="width:18px;height:18px;background:#6080a5;border-radius:3px;display:block;opacity:.55;"></span>
     </div>
     <div title="sideBar.background &mdash; #EEF3FA" style="background:#EEF3FA;width:160px;padding:8px 0;border-right:1px solid #CCD8EA;">
-      <div title="sideBarTitle.foreground &mdash; #2563EB" style="color:#2563EB;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div title="sideBarTitle.foreground &mdash; #2563EB" style="color:#2563EB;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">エクスプローラー</div>
       <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #2563EB" style="color:#2563EB;font-size:11px;padding:3px 10px 3px 22px;background:#2563EB22;">settings.json</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #1e3a5f" style="color:#1e3a5f;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #1e3a5f" style="color:#1e3a5f;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
@@ -604,39 +604,39 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   </div>
   <div title="panel.background &mdash; #EEF3FA" style="background:#EEF3FA;">
     <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #CCD8EA;">
-      <span title="panelTitle.inactiveForeground &mdash; #6080a5" style="color:#6080a5;padding:0 0 6px;line-height:1;">PROBLEMS</span>
-      <span title="panelTitle.inactiveForeground &mdash; #6080a5" style="color:#6080a5;padding:0 0 6px;line-height:1;">OUTPUT</span>
-      <span title="panelTitle.inactiveForeground &mdash; #6080a5" style="color:#6080a5;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
-      <span title="panelTitle.activeForeground &mdash; #1e3a5f" style="color:#1e3a5f;padding:0 0 5px;line-height:1;border-bottom:1px solid #2563EB;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #6080a5" style="color:#6080a5;padding:0 0 6px;line-height:1;">問題</span>
+      <span title="panelTitle.inactiveForeground &mdash; #6080a5" style="color:#6080a5;padding:0 0 6px;line-height:1;">出力</span>
+      <span title="panelTitle.inactiveForeground &mdash; #6080a5" style="color:#6080a5;padding:0 0 6px;line-height:1;">デバッグ コンソール</span>
+      <span title="panelTitle.activeForeground &mdash; #1e3a5f" style="color:#1e3a5f;padding:0 0 5px;line-height:1;border-bottom:1px solid #2563EB;margin-bottom:-1px;">ターミナル</span>
       <span title="panelTitle.inactiveForeground &mdash; #6080a5" style="color:#6080a5;padding:0 0 6px;line-height:1;">GITLENS</span>
     </div>
     <div title="terminal.background &mdash; #EEF3FA" style="background:#EEF3FA;padding:10px 14px;color:#1e3a5f;font-size:11px;line-height:1.5;">
       <div><span title="terminal.foreground &mdash; #1e3a5f" style="color:#1e3a5f;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #1e3a5f" style="color:#1e3a5f;">vscode-theme set arctic-light</span></div>
-      <div><span title="terminal.ansiGreen &mdash; #16A34A" style="color:#16A34A;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #1e3a5f" style="color:#1e3a5f;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #16A34A" style="color:#16A34A;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #1e3a5f" style="color:#1e3a5f;">テーマをワークスペースに適用しました。</span></div>
       <div><span title="terminal.foreground &mdash; #1e3a5f" style="color:#1e3a5f;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #2563EB" style="display:inline-block;width:7px;height:12px;background:#2563EB;ertical-align:text-bottom;"></span></div>
     </div>
   </div>
   <div title="statusBar.background &mdash; #DCE6F2" style="background:#DCE6F2;color:#1e3a5f;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #2563EB55;">
     <span style="opacity:.85;">main</span>
-    <span style="opacity:.85;">No problems</span>
+    <span style="opacity:.85;">問題なし</span>
   </div>
 </div>
 
-**Theme name:** `arctic-light`  
-**Accent:** `#2563EB` &middot; **Background:** `#F4F8FC` &middot; **Title bar:** `#DCE6F2`
+**テーマ名:** `arctic-light`  
+**アクセント:** `#2563EB` &middot; **背景:** `#F4F8FC` &middot; **タイトルバー:** `#DCE6F2`
 
 ---
 
 ### K &mdash; Frappé teal<!-- omit in toc -->
 
 
-> Catppuccin Frappé-inspired dark with a vivid teal accent. Designed to pair visually with `dawn-teal` for a matched dark/light set.
+> Catppuccin Frappé にインスパイアされたダークテーマ。鮮やかなティールアクセント。`dawn-teal` とペアで使うことを想定したダーク／ライトセット。
 
 
 <div class="vsc-card" style="--hvr-bg:#11B7C514;--hvr-fg:#c6d0f5;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;border:1px solid #414559;">
   <div title="titleBar.activeBackground &mdash; #292c3c" style="background:#292c3c;color:#c6d0f5;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #11B7C5;">
     <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
-    <span title="titleBar.inactiveForeground &mdash; #a5adce" style="flex:1;text-align:center;font-size:11px;color:#a5adce;">vacode-theme &mdash; VS Code</span>
+    <span title="titleBar.inactiveForeground &mdash; #a5adce" style="flex:1;text-align:center;font-size:11px;color:#a5adce;">vscode-theme &mdash; VS Code</span>
   </div>
   <div style="display:flex;height:150px;">
     <div title="activityBar.background &mdash; #292c3c" style="background:#292c3c;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
@@ -645,7 +645,7 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
       <span title="activityBar.inactiveForeground &mdash; #737994" style="width:18px;height:18px;background:#737994;border-radius:3px;display:block;opacity:.55;"></span>
     </div>
     <div title="sideBar.background &mdash; #292c3c" style="background:#292c3c;width:160px;padding:8px 0;border-right:1px solid #414559;">
-      <div title="sideBarTitle.foreground &mdash; #11B7C5" style="color:#11B7C5;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div title="sideBarTitle.foreground &mdash; #11B7C5" style="color:#11B7C5;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">エクスプローラー</div>
       <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #11B7C5" style="color:#11B7C5;font-size:11px;padding:3px 10px 3px 22px;background:#11B7C522;">settings.json</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #c6d0f5" style="color:#c6d0f5;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #c6d0f5" style="color:#c6d0f5;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
@@ -664,39 +664,39 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   </div>
   <div title="panel.background &mdash; #232634" style="background:#232634;">
     <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #414559;">
-      <span title="panelTitle.inactiveForeground &mdash; #a5adce" style="color:#a5adce;padding:0 0 6px;line-height:1;">PROBLEMS</span>
-      <span title="panelTitle.inactiveForeground &mdash; #a5adce" style="color:#a5adce;padding:0 0 6px;line-height:1;">OUTPUT</span>
-      <span title="panelTitle.inactiveForeground &mdash; #a5adce" style="color:#a5adce;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
-      <span title="panelTitle.activeForeground &mdash; #c6d0f5" style="color:#c6d0f5;padding:0 0 5px;line-height:1;border-bottom:1px solid #11B7C5;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a5adce" style="color:#a5adce;padding:0 0 6px;line-height:1;">問題</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a5adce" style="color:#a5adce;padding:0 0 6px;line-height:1;">出力</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a5adce" style="color:#a5adce;padding:0 0 6px;line-height:1;">デバッグ コンソール</span>
+      <span title="panelTitle.activeForeground &mdash; #c6d0f5" style="color:#c6d0f5;padding:0 0 5px;line-height:1;border-bottom:1px solid #11B7C5;margin-bottom:-1px;">ターミナル</span>
       <span title="panelTitle.inactiveForeground &mdash; #a5adce" style="color:#a5adce;padding:0 0 6px;line-height:1;">GITLENS</span>
     </div>
     <div title="terminal.background &mdash; #232634" style="background:#232634;padding:10px 14px;color:#c6d0f5;font-size:11px;line-height:1.5;">
       <div><span title="terminal.foreground &mdash; #c6d0f5" style="color:#c6d0f5;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #c6d0f5" style="color:#c6d0f5;">vscode-theme set frappe-teal</span></div>
-      <div><span title="terminal.ansiGreen &mdash; #a6d189" style="color:#a6d189;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #c6d0f5" style="color:#c6d0f5;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #a6d189" style="color:#a6d189;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #c6d0f5" style="color:#c6d0f5;">テーマをワークスペースに適用しました。</span></div>
       <div><span title="terminal.foreground &mdash; #c6d0f5" style="color:#c6d0f5;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #11B7C5" style="display:inline-block;width:7px;height:12px;background:#11B7C5;vertical-align:text-bottom;"></span></div>
     </div>
   </div>
   <div title="statusBar.background &mdash; #292c3c" style="background:#292c3c;color:#c6d0f5;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #11B7C555;">
     <span style="opacity:.85;">main</span>
-    <span style="opacity:.85;">No problems</span>
+    <span style="opacity:.85;">問題なし</span>
   </div>
 </div>
 
-**Theme name:** `frappe-teal`  
-**Accent:** `#11B7C5` &middot; **Background:** `#303446` &middot; **Title bar:** `#292c3c`
+**テーマ名:** `frappe-teal`  
+**アクセント:** `#11B7C5` &middot; **背景:** `#303446` &middot; **タイトルバー:** `#292c3c`
 
 ---
 
 ### L &mdash; Dawn teal<!-- omit in toc -->
 
 
-> Rosé Pine Dawn-inspired light cream background with a deep teal accent. The light counterpart to `frappe-teal`.
+> Rosé Pine Dawn にインスパイアされたライトテーマ。明るいクリーム色の背景に深いティールのアクセント。`frappe-teal` のライト版カウンターパート。
 
 
 <div class="vsc-card" style="--hvr-bg:#1A7DA414;--hvr-fg:#575279;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;border:1px solid #e8dfd3;">
   <div title="titleBar.activeBackground &mdash; #f2e9e1" style="background:#f2e9e1;color:#575279;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #1A7DA4;">
     <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
-    <span title="titleBar.inactiveForeground &mdash; #797593" style="flex:1;text-align:center;font-size:11px;color:#797593;">vacode-theme &mdash; VS Code</span>
+    <span title="titleBar.inactiveForeground &mdash; #797593" style="flex:1;text-align:center;font-size:11px;color:#797593;">vscode-theme &mdash; VS Code</span>
   </div>
   <div style="display:flex;height:150px;">
     <div title="activityBar.background &mdash; #fffaf3" style="background:#fffaf3;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
@@ -705,7 +705,7 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
       <span title="activityBar.inactiveForeground &mdash; #9893a5" style="width:18px;height:18px;background:#9893a5;border-radius:3px;display:block;opacity:.55;"></span>
     </div>
     <div title="sideBar.background &mdash; #fffaf3" style="background:#fffaf3;width:160px;padding:8px 0;border-right:1px solid #e8dfd3;">
-      <div title="sideBarTitle.foreground &mdash; #1A7DA4" style="color:#1A7DA4;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div title="sideBarTitle.foreground &mdash; #1A7DA4" style="color:#1A7DA4;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">エクスプローラー</div>
       <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #1A7DA4" style="color:#1A7DA4;font-size:11px;padding:3px 10px 3px 22px;background:#1A7DA422;">settings.json</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #575279" style="color:#575279;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
       <div class="sb-item" title="sideBar.foreground &mdash; #575279" style="color:#575279;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
@@ -724,106 +724,106 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   </div>
   <div title="panel.background &mdash; #fffaf3" style="background:#fffaf3;">
     <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #e8dfd3;">
-      <span title="panelTitle.inactiveForeground &mdash; #797593" style="color:#797593;padding:0 0 6px;line-height:1;">PROBLEMS</span>
-      <span title="panelTitle.inactiveForeground &mdash; #797593" style="color:#797593;padding:0 0 6px;line-height:1;">OUTPUT</span>
-      <span title="panelTitle.inactiveForeground &mdash; #797593" style="color:#797593;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
-      <span title="panelTitle.activeForeground &mdash; #575279" style="color:#575279;padding:0 0 5px;line-height:1;border-bottom:1px solid #1A7DA4;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #797593" style="color:#797593;padding:0 0 6px;line-height:1;">問題</span>
+      <span title="panelTitle.inactiveForeground &mdash; #797593" style="color:#797593;padding:0 0 6px;line-height:1;">出力</span>
+      <span title="panelTitle.inactiveForeground &mdash; #797593" style="color:#797593;padding:0 0 6px;line-height:1;">デバッグ コンソール</span>
+      <span title="panelTitle.activeForeground &mdash; #575279" style="color:#575279;padding:0 0 5px;line-height:1;border-bottom:1px solid #1A7DA4;margin-bottom:-1px;">ターミナル</span>
       <span title="panelTitle.inactiveForeground &mdash; #797593" style="color:#797593;padding:0 0 6px;line-height:1;">GITLENS</span>
     </div>
     <div title="terminal.background &mdash; #fffaf3" style="background:#fffaf3;padding:10px 14px;color:#575279;font-size:11px;line-height:1.5;">
       <div><span title="terminal.foreground &mdash; #575279" style="color:#575279;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #575279" style="color:#575279;">vscode-theme set dawn-teal</span></div>
-      <div><span title="terminal.ansiGreen &mdash; #618774" style="color:#618774;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #575279" style="color:#575279;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #618774" style="color:#618774;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #575279" style="color:#575279;">テーマをワークスペースに適用しました。</span></div>
       <div><span title="terminal.foreground &mdash; #575279" style="color:#575279;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #1A7DA4" style="display:inline-block;width:7px;height:12px;background:#1A7DA4;vertical-align:text-bottom;"></span></div>
     </div>
   </div>
   <div title="statusBar.background &mdash; #f2e9e1" style="background:#f2e9e1;color:#575279;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #1A7DA455;">
     <span style="opacity:.85;">main</span>
-    <span style="opacity:.85;">No problems</span>
+    <span style="opacity:.85;">問題なし</span>
   </div>
 </div>
 
-**Theme name:** `dawn-teal`  
-**Accent:** `#1A7DA4` &middot; **Background:** `#faf4ed` &middot; **Title bar:** `#f2e9e1`
+**テーマ名:** `dawn-teal`  
+**アクセント:** `#1A7DA4` &middot; **背景:** `#faf4ed` &middot; **タイトルバー:** `#f2e9e1`
 
 ---
 
-## Using themes as workspace identity markers
+## ワークスペースの識別マーカーとしてのテーマ活用
 
-Because each theme paints the title bar, activity bar, and status bar with a strong accent, you can use them as *visual environment tags* across VSCode windows — at a glance you always know whether you're looking at prod, staging, or your scratchpad. Apply a theme globally for your default, and override per-workspace with `vscode-theme set <name>` inside any project folder.
+各テーマはタイトルバー・アクティビティバー・ステータスバーを強いアクセント色で塗るため、複数の VSCode ウィンドウを並べたときの「**視覚的な環境タグ**」として使えます。今見ているのが本番・ステージング・作業用スクラッチパッドのどれなのか、一目で分かるようになります。既定値はグローバルに適用し、プロジェクトフォルダ内で `vscode-theme set <name>` を実行すればワークスペース単位で上書きできます。
 
-One suggested mapping:
+用途のマッピング例：
 
-| Role                            | Theme                            | Why                                                                            |
-| ------------------------------- | -------------------------------- | ------------------------------------------------------------------------------ |
-| **Production / danger zone**    | `dark-ember`                     | Ember red reads as "be careful here".                                          |
-| **Staging / pre-prod**          | `squidink-yellow`                | Gold = caution but not stop.                                                   |
-| **Development**                 | `forest-green` or `bedrock-teal` | Green = safe, go.                                                              |
-| **Personal / side projects**    | `royal-purple` or `rose-magenta` | Clearly distinct from any work window.                                         |
-| **Cloud / infra work**          | `navy-orange` or `ocean-blue`    | Cool tones for long-running infra sessions.                                    |
-| **Docs / writing / daylight**   | `paper-light` or `arctic-light`  | Light themes for reading-heavy or bright-room work.                            |
-| **Coordinated dark/light pair** | `frappe-teal` + `dawn-teal`      | Shared teal accent — switch by ambient light without changing visual identity. |
+| 用途                             | テーマ                               | 理由                                                                                     |
+| -------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------- |
+| **本番 / 危険ゾーン**            | `dark-ember`                         | エンバーレッドは「ここでは慎重に」という感覚。                                           |
+| **ステージング / pre-prod**      | `squidink-yellow`                    | ゴールド＝注意、ただし停止ではない。                                                     |
+| **開発**                         | `forest-green` または `bedrock-teal` | グリーン＝安全、進んで OK。                                                              |
+| **個人 / サイドプロジェクト**    | `royal-purple` または `rose-magenta` | 仕事のウィンドウと明確に区別。                                                           |
+| **クラウド / インフラ作業**      | `navy-orange` または `ocean-blue`    | 長時間のインフラ作業に適したクール系トーン。                                             |
+| **ドキュメント / 執筆 / 昼光下** | `paper-light` または `arctic-light`  | 読む作業が多いときや明るい部屋ではライトテーマを。                                       |
+| **連動するダーク／ライトペア**   | `frappe-teal` + `dawn-teal`          | ティールのアクセントを共有。周囲の明るさで切り替えても視覚的アイデンティティは保たれる。 |
 
-This is just a convention — pick whatever color-to-meaning mapping feels right to you. The tool doesn't enforce any of it.
+これはあくまで慣例です。色と意味の対応付けは自分にとって自然なものを選んでください。ツール側で強制しているわけではありません。
 
 ---
 
-## Installation
+## インストール
 
-All theme JSONs live in [.vscode-themes/](.vscode-themes/) in this repo. The switcher looks them up from `~/.vscode-themes/` at runtime, so installation is: copy those JSONs into `~/.vscode-themes/`, then source the script from your shell profile. The scripts in git carry a `__VERSION__` placeholder that the install steps below replace with the current value from [VERSION](VERSION) — see [Version](#version) for why.
+テーマ JSON はすべてリポジトリ内の [.vscode-themes/](.vscode-themes/) に置かれています。スイッチャーは実行時に `~/.vscode-themes/` を参照するため、インストール手順は「これらの JSON を `~/.vscode-themes/` にコピーし、シェルプロファイルからスクリプトを source する」だけです。git 上のスクリプトには `__VERSION__` プレースホルダが入っており、以下の手順で [VERSION](VERSION) の現在値に置換されます（理由は [バージョン](#バージョン) を参照）。
 
-**The same block also serves as an update.** The steps are idempotent: `cp` / `Copy-Item` overwrite the theme JSONs and the versioned script in `~/.vscode-themes/`, and the shell-profile-append step is guarded so rerunning never adds a duplicate `source` line. To update after pulling a newer repo (new themes, fixes, or a bumped [VERSION](VERSION)), rerun the whole block — no separate update procedure needed.
+**同じコマンドブロックをそのままアップデートにも使えます。** 手順はすべて冪等で、`cp` / `Copy-Item` は `~/.vscode-themes/` のテーマ JSON とバージョン入りスクリプトを上書きし、シェルプロファイルへの追記ステップは重複を防ぐガード付きなので再実行しても同じ `source` 行が二重に追加されません。新しいリポジトリを pull した後の更新（新テーマ・修正・[VERSION](VERSION) のバンプなど）は、このブロック全体を再実行するだけで済みます。別途のアップデート手順は不要です。
 
-Run the commands below from the **repo root**, so `VERSION`, `vscode-theme.sh` / `vscode-theme.ps1`, and `.vscode-themes/` are all in the current directory.
+以下のコマンドは **リポジトリのルート** で実行してください。`VERSION`・`vscode-theme.sh` / `vscode-theme.ps1`・`.vscode-themes/` がすべてカレントディレクトリに揃っている必要があります。
 
-### macOS / Linux (bash / zsh)
+### macOS / Linux（bash / zsh）
 
 ```bash
-# 1. Create the theme directory
+# 1. テーマディレクトリを作成
 mkdir -p ~/.vscode-themes
 
-# 2. Copy the bundled theme JSONs
+# 2. 同梱されているテーマ JSON をコピー
 cp .vscode-themes/*.json ~/.vscode-themes/
 
-# 3. Bake the current version into vscode-theme.sh, copy it to the install
-#    location, then revert the repo copy back to its __VERSION__ placeholder
-#    so the working tree stays clean.
+# 3. 現在のバージョンを vscode-theme.sh に焼き込み、インストール先にコピー。
+#    その後、リポジトリ側のコピーを __VERSION__ プレースホルダに戻して
+#    作業ツリーをクリーンな状態に保つ。
 VERSION=$(cat VERSION)
 sed -i.bak "s/__VERSION__/${VERSION}/" vscode-theme.sh
 cp vscode-theme.sh ~/.vscode-themes/vscode-theme.sh
-mv vscode-theme.sh.bak vscode-theme.sh   # restore the placeholder in the repo
+mv vscode-theme.sh.bak vscode-theme.sh   # リポジトリ側のプレースホルダを復元
 
-# 4. Add to shell profile (~/.zshrc or ~/.bashrc) — idempotent: only append
-#    if the line isn't already there, so rerunning as an update is safe.
+# 4. シェルプロファイル（~/.zshrc または ~/.bashrc）へ追記。
+#    冪等：同じ行が既にある場合は追記しないので、アップデートでの再実行も安全。
 LINE='source ~/.vscode-themes/vscode-theme.sh'
 grep -qF "$LINE" ~/.zshrc 2>/dev/null || echo "$LINE" >> ~/.zshrc
 
-# 5. Reload shell
+# 5. シェルを再読み込み
 source ~/.zshrc
 ```
 
-### Windows (PowerShell)
+### Windows（PowerShell）
 
 ```powershell
-# 1. Create the theme directory
+# 1. テーマディレクトリを作成
 New-Item -ItemType Directory -Force "$HOME\.vscode-themes"
 
-# 2. Copy the bundled theme JSONs
+# 2. 同梱されているテーマ JSON をコピー
 Copy-Item .vscode-themes\*.json "$HOME\.vscode-themes\"
 
-# 3. Bake the current version into vscode-theme.ps1, copy it to the install
-#    location, then revert the repo copy back to its __VERSION__ placeholder
-#    so the working tree stays clean.
+# 3. 現在のバージョンを vscode-theme.ps1 に焼き込み、インストール先にコピー。
+#    その後、リポジトリ側のコピーを __VERSION__ プレースホルダに戻して
+#    作業ツリーをクリーンな状態に保つ。
 $version  = (Get-Content VERSION -Raw).Trim()
 $original = Get-Content vscode-theme.ps1 -Raw
 ($original -replace '__VERSION__', $version) | Set-Content vscode-theme.ps1 -NoNewline
 Copy-Item vscode-theme.ps1 "$HOME\.vscode-themes\vscode-theme.ps1"
-Set-Content vscode-theme.ps1 -Value $original -NoNewline   # restore placeholder
+Set-Content vscode-theme.ps1 -Value $original -NoNewline   # プレースホルダを復元
 
-# 4. Unblock the installed script (required if downloaded from the internet)
+# 4. インストール先のスクリプトの実行ブロックを解除（インターネット経由で取得した場合に必要）
 Unblock-File "$HOME\.vscode-themes\vscode-theme.ps1"
 
-# 5. Add to PowerShell profile — idempotent: only append if the line isn't
-#    already there, so rerunning as an update is safe.
+# 5. PowerShell プロファイルへ追記。
+#    冪等：同じ行が既にある場合は追記しないので、アップデートでの再実行も安全。
 $line = ". `"$HOME\.vscode-themes\vscode-theme.ps1`""
 New-Item -ItemType Directory -Force (Split-Path $PROFILE) | Out-Null
 New-Item -ItemType File -Force $PROFILE | Out-Null
@@ -831,91 +831,91 @@ if (-not ((Get-Content $PROFILE -ErrorAction SilentlyContinue) -contains $line))
     Add-Content $PROFILE $line
 }
 
-# 6. Reload profile
+# 6. プロファイルを再読み込み
 . $PROFILE
 ```
 
 ---
 
-## Usage
+## 使い方
 
-The same subcommands work in both shells. Only the global-scope flag differs in syntax, because each shell has its own parameter convention.
+サブコマンドは bash / PowerShell どちらでも同じです。グローバルスコープを指定するフラグの書式だけシェルごとのパラメータ慣習に合わせて異なります。
 
-| Action                                   | bash / zsh                                                                          | PowerShell                                                                          |
-| ---------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| List available themes                    | `vscode-theme list`                                                                 | `vscode-theme list`                                                                 |
-| Show current status (global + workspace) | `vscode-theme status`                                                               | `vscode-theme status`                                                               |
-| Apply a theme to the current workspace   | `vscode-theme set navy-orange`                                                      | `vscode-theme set navy-orange`                                                      |
-| Apply a theme globally                   | `vscode-theme set navy-orange --global`<br>`vscode-theme set navy-orange -g`        | `vscode-theme set navy-orange -Global`<br>`vscode-theme set navy-orange -g`         |
-| Reset workspace theme                    | `vscode-theme reset`                                                                | `vscode-theme reset`                                                                |
-| Reset global theme                       | `vscode-theme reset --global`<br>`vscode-theme reset -g`                            | `vscode-theme reset -Global`<br>`vscode-theme reset -g`                             |
-| Show version                             | `vscode-theme version`<br>`vscode-theme --version`<br>`vscode-theme -v`             | `vscode-theme version`<br>`vscode-theme --version`<br>`vscode-theme -v`             |
-| Show help                                | `vscode-theme help`<br>`vscode-theme --help`<br>`vscode-theme -h`<br>`vscode-theme` | `vscode-theme help`<br>`vscode-theme --help`<br>`vscode-theme -h`<br>`vscode-theme` |
+| 操作                                            | bash / zsh                                                                          | PowerShell                                                                          |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| 利用可能なテーマを一覧表示                      | `vscode-theme list`                                                                 | `vscode-theme list`                                                                 |
+| 現在の状態を表示（グローバル + ワークスペース） | `vscode-theme status`                                                               | `vscode-theme status`                                                               |
+| 現在のワークスペースにテーマを適用              | `vscode-theme set navy-orange`                                                      | `vscode-theme set navy-orange`                                                      |
+| テーマをグローバルに適用                        | `vscode-theme set navy-orange --global`<br>`vscode-theme set navy-orange -g`        | `vscode-theme set navy-orange -Global`<br>`vscode-theme set navy-orange -g`         |
+| ワークスペースのテーマをリセット                | `vscode-theme reset`                                                                | `vscode-theme reset`                                                                |
+| グローバルのテーマをリセット                    | `vscode-theme reset --global`<br>`vscode-theme reset -g`                            | `vscode-theme reset -Global`<br>`vscode-theme reset -g`                             |
+| バージョンを表示                                | `vscode-theme version`<br>`vscode-theme --version`<br>`vscode-theme -v`             | `vscode-theme version`<br>`vscode-theme --version`<br>`vscode-theme -v`             |
+| ヘルプを表示                                    | `vscode-theme help`<br>`vscode-theme --help`<br>`vscode-theme -h`<br>`vscode-theme` | `vscode-theme help`<br>`vscode-theme --help`<br>`vscode-theme -h`<br>`vscode-theme` |
 
-**Note on the global flag.** PowerShell uses single-dash CamelCase for switches (`-Global`), which is its native convention — `--global` is not valid PowerShell syntax. The bash script accepts `-g` or `--global`; the PowerShell script accepts `-g` or `-Global` (case-insensitive, so `-global` works too). The short form `-g` is identical in both shells.
+**グローバルフラグについての注意。** PowerShell ではスイッチにシングルダッシュ＋キャメルケース（`-Global`）を使うのがネイティブの慣習で、`--global` は PowerShell の文法としては有効ではありません。bash スクリプトは `-g` と `--global` を、PowerShell スクリプトは `-g` と `-Global`（大文字小文字を区別しないので `-global` でも可）を受け付けます。短縮形 `-g` は両シェルで共通です。
 
-After applying a theme, reload the VSCode window:  
-`Ctrl+Shift+P` (Windows / Linux) or `Cmd+Shift+P` (macOS) → **Reload Window**
+テーマを適用したら、VSCode のウィンドウを再読み込みしてください：  
+`Ctrl+Shift+P`（Windows / Linux）または `Cmd+Shift+P`（macOS）→ **Reload Window**
 
 ---
 
-## How it works
+## 仕組み
 
-When you run `vscode-theme set <name>`, the tool:
+`vscode-theme set <name>` を実行すると、ツールは以下を行います：
 
-1. Reads the theme JSON from `~/.vscode-themes/<name>.json`
-2. Opens (or creates) the target `settings.json`
-3. If `workbench.colorCustomizations` already exists and was **not** set by this tool, saves it as `__vscode_theme_backup` inside the same file
-4. Writes the new colors and stamps `__vscode_theme_managed` with the theme name
+1. `~/.vscode-themes/<name>.json` からテーマ JSON を読み込む
+2. 対象の `settings.json` を開く（なければ作成する）
+3. `workbench.colorCustomizations` が既に存在し、かつ **このツール由来ではない** 場合、同じファイル内の `__vscode_theme_backup` として退避する
+4. 新しい色を書き込み、`__vscode_theme_managed` にテーマ名を刻印する
 
-When you run `vscode-theme reset`:
+`vscode-theme reset` を実行すると：
 
-1. If `__vscode_theme_backup` exists → restores it back to `workbench.colorCustomizations`
-2. If no backup → removes `workbench.colorCustomizations` entirely
-3. If removing leaves the workspace `settings.json` empty, the file itself is deleted
-4. All other settings in `settings.json` are untouched throughout
+1. `__vscode_theme_backup` があれば → `workbench.colorCustomizations` に書き戻す
+2. バックアップが無ければ → `workbench.colorCustomizations` ごと削除する
+3. 削除した結果ワークスペースの `settings.json` が空になったら、ファイル自体も削除する
+4. この間、`settings.json` 内の他の設定には一切手を加えない
 
 ```
-settings.json (while theme is active)
-├── workbench.colorCustomizations   ← theme colors
+settings.json（テーマ適用中）
+├── workbench.colorCustomizations   ← テーマの色
 ├── __vscode_theme_managed          ← "navy-orange"
-├── __vscode_theme_backup           ← original colors (if any existed before)
-└── ... your other settings ...     ← never touched
+├── __vscode_theme_backup           ← 元々の色（既存のものがあった場合）
+└── ... その他の設定 ...            ← 一切変更しない
 ```
 
-The bash version uses Python (`python3` or `python`) for JSON merging; make sure one is on your `PATH`. The PowerShell version uses built-in `ConvertFrom-Json` / `ConvertTo-Json` and has no extra dependencies.
+bash 版は JSON のマージに Python（`python3` または `python`）を使うので、どちらかが `PATH` に通っている必要があります。PowerShell 版は組み込みの `ConvertFrom-Json` / `ConvertTo-Json` を使うため、追加の依存はありません。
 
 ---
 
-## Files
+## ファイル構成
 
-| File                                                                       | Description                                                           |
-| -------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| [VERSION](VERSION)                                                         | Single source of truth for the tool's version                         |
-| [vscode-theme.sh](vscode-theme.sh)                                         | Shell function for macOS / Linux (bash / zsh) — carries `__VERSION__` |
-| [vscode-theme.ps1](vscode-theme.ps1)                                       | PowerShell function for Windows — carries `__VERSION__`               |
-| [.vscode-themes/navy-orange.json](.vscode-themes/navy-orange.json)         | Theme A — Navy + orange                                               |
-| [.vscode-themes/squidink-yellow.json](.vscode-themes/squidink-yellow.json) | Theme B — Squid ink + yellow                                          |
-| [.vscode-themes/bedrock-teal.json](.vscode-themes/bedrock-teal.json)       | Theme C — Bedrock teal                                                |
-| [.vscode-themes/dark-ember.json](.vscode-themes/dark-ember.json)           | Theme D — Dark + ember red                                            |
-| [.vscode-themes/forest-green.json](.vscode-themes/forest-green.json)       | Theme E — Forest green                                                |
-| [.vscode-themes/royal-purple.json](.vscode-themes/royal-purple.json)       | Theme F — Royal purple                                                |
-| [.vscode-themes/ocean-blue.json](.vscode-themes/ocean-blue.json)           | Theme G — Ocean blue                                                  |
-| [.vscode-themes/rose-magenta.json](.vscode-themes/rose-magenta.json)       | Theme H — Rose magenta                                                |
-| [.vscode-themes/paper-light.json](.vscode-themes/paper-light.json)         | Theme I — Paper light                                                 |
-| [.vscode-themes/arctic-light.json](.vscode-themes/arctic-light.json)       | Theme J — Arctic light                                                |
-| [.vscode-themes/frappe-teal.json](.vscode-themes/frappe-teal.json)         | Theme K — Frappé teal (Catppuccin-inspired dark)                      |
-| [.vscode-themes/dawn-teal.json](.vscode-themes/dawn-teal.json)             | Theme L — Dawn teal (Rosé Pine Dawn-inspired light)                   |
+| ファイル                                                                   | 説明                                                            |
+| -------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [VERSION](VERSION)                                                         | ツールのバージョンの唯一の情報源                                |
+| [vscode-theme.sh](vscode-theme.sh)                                         | macOS / Linux（bash / zsh）用のシェル関数。`__VERSION__` を保持 |
+| [vscode-theme.ps1](vscode-theme.ps1)                                       | Windows 用の PowerShell 関数。`__VERSION__` を保持              |
+| [.vscode-themes/navy-orange.json](.vscode-themes/navy-orange.json)         | テーマ A — Navy + orange                                        |
+| [.vscode-themes/squidink-yellow.json](.vscode-themes/squidink-yellow.json) | テーマ B — Squid ink + yellow                                   |
+| [.vscode-themes/bedrock-teal.json](.vscode-themes/bedrock-teal.json)       | テーマ C — Bedrock teal                                         |
+| [.vscode-themes/dark-ember.json](.vscode-themes/dark-ember.json)           | テーマ D — Dark + ember red                                     |
+| [.vscode-themes/forest-green.json](.vscode-themes/forest-green.json)       | テーマ E — Forest green                                         |
+| [.vscode-themes/royal-purple.json](.vscode-themes/royal-purple.json)       | テーマ F — Royal purple                                         |
+| [.vscode-themes/ocean-blue.json](.vscode-themes/ocean-blue.json)           | テーマ G — Ocean blue                                           |
+| [.vscode-themes/rose-magenta.json](.vscode-themes/rose-magenta.json)       | テーマ H — Rose magenta                                         |
+| [.vscode-themes/paper-light.json](.vscode-themes/paper-light.json)         | テーマ I — Paper light                                          |
+| [.vscode-themes/arctic-light.json](.vscode-themes/arctic-light.json)       | テーマ J — Arctic light                                         |
+| [.vscode-themes/frappe-teal.json](.vscode-themes/frappe-teal.json)         | テーマ K — Frappé teal（Catppuccin インスパイアのダーク）       |
+| [.vscode-themes/dawn-teal.json](.vscode-themes/dawn-teal.json)             | テーマ L — Dawn teal（Rosé Pine Dawn インスパイアのライト）     |
 
 ---
 
-## Version
+## バージョン
 
-The tool's version lives in a single file — [VERSION](VERSION) — at the repo root. That file is the **only** place the version number is ever written.
+このツールのバージョンは、リポジトリのルートにある単一のファイル [VERSION](VERSION) に記載されています。バージョン番号が書かれる場所は **このファイルだけ** です。
 
-### How the version flows
+### バージョンの伝わり方
 
-Both shell scripts in git carry a literal `__VERSION__` placeholder instead of a hardcoded string:
+git 上の両方のシェルスクリプトは、ハードコードされた文字列ではなく `__VERSION__` というリテラルのプレースホルダを持っています：
 
 ```sh
 # vscode-theme.sh
@@ -927,8 +927,8 @@ VSCODE_THEME_VERSION="__VERSION__"
 $script:VT_VERSION = '__VERSION__'
 ```
 
-The install steps in [Installation](#installation) read `VERSION`, substitute the placeholder in the repo copy, copy the versioned script to `~/.vscode-themes/`, then **revert** the repo copy back to `__VERSION__`. The net effect:
+[インストール](#インストール) の手順は、`VERSION` を読み取り、リポジトリ側のスクリプトでプレースホルダを置換し、バージョン入りのスクリプトを `~/.vscode-themes/` にコピーしたあと、リポジトリ側のコピーを `__VERSION__` に **戻します**。結果として：
 
-- The installed copy (at `~/.vscode-themes/vscode-theme.{sh,ps1}`) has the real version baked in, so `vscode-theme version` works for end users.
-- The repo working tree stays clean — `git status` shows no changes after install.
-- There is exactly one place to edit when bumping: [VERSION](VERSION). Rerun the install steps and the new version is picked up automatically; no code changes, no drift between the scripts and the README.
+- インストール先のコピー（`~/.vscode-themes/vscode-theme.{sh,ps1}`）には実際のバージョンが焼き込まれているので、エンドユーザーが `vscode-theme version` を実行するとバージョンが表示されます。
+- リポジトリの作業ツリーはクリーンなまま。インストール後の `git status` には差分が出ません。
+- バージョンを上げたいときに編集する場所は [VERSION](VERSION) の一箇所だけ。あとはインストール手順を再実行すれば自動で反映されます。コードの書き換えは不要で、スクリプトと README の値がずれることもありません。

@@ -8,7 +8,7 @@ Shell/PowerShell command that applies `workbench.colorCustomizations` from JSON 
 
 `workbench.colorCustomizations` is an **override layer, not a full theme**. Any key not explicitly set falls through to the user's currently-active base theme. If a user has a dark base theme and applies one of our light themes, every unset UI color stays dark → invisible text on light background, and vice versa.
 
-**Every theme must ship ~190+ explicit overrides** to be base-theme-agnostic. The four original themes (`navy-orange`, `squidink-yellow`, `bedrock-teal`, `dark-ember`) still have the old 52-key minimal set and will break under a light base theme — harden them the same way if touched. The six newer themes are the reference layout for what "complete" looks like.
+**Every theme must ship ~190+ explicit overrides** to be base-theme-agnostic. The four original themes (`navy-orange`, `squidink-yellow`, `bedrock-teal`, `dark-ember`) still have the old 52-key minimal set and will break under a light base theme — harden them the same way if touched. The newer themes (everything else in [.vscode-themes/](.vscode-themes/)) are the reference layout for what "complete" looks like.
 
 Minimum categories every theme must cover:
 
