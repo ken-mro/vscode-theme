@@ -1,0 +1,63 @@
+{
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#0d2b2b",
+    "titleBar.activeForeground": "#b8d8d4",
+    "titleBar.inactiveBackground": "#081e1e",
+    "titleBar.inactiveForeground": "#3a7070",
+    "titleBar.border": "#01A88D",
+
+    "activityBar.background": "#081e1e",
+    "activityBar.foreground": "#01A88D",
+    "activityBar.inactiveForeground": "#1a4040",
+    "activityBar.border": "#0f2a2a",
+    "activityBarBadge.background": "#01A88D",
+    "activityBarBadge.foreground": "#061616",
+
+    "sideBar.background": "#0a2020",
+    "sideBar.foreground": "#5a9090",
+    "sideBar.border": "#0f2a2a",
+    "sideBarTitle.foreground": "#01A88D",
+    "sideBarSectionHeader.background": "#061616",
+    "sideBarSectionHeader.foreground": "#01A88D",
+    "sideBarSectionHeader.border": "#0f2a2a",
+
+    "editor.background": "#061616",
+    "editor.foreground": "#b8d8d4",
+    "editorLineNumber.foreground": "#1a3838",
+    "editorLineNumber.activeForeground": "#01A88D",
+    "editor.lineHighlightBackground": "#01A88D12",
+    "editorCursor.foreground": "#01A88D",
+    "editor.selectionBackground": "#01A88D30",
+    "editor.findMatchBackground": "#01A88D50",
+    "editor.findMatchHighlightBackground": "#01A88D28",
+
+    "editorGroupHeader.tabsBackground": "#0a2020",
+    "tab.activeBackground": "#061616",
+    "tab.activeForeground": "#b8d8d4",
+    "tab.activeBorderTop": "#01A88D",
+    "tab.inactiveBackground": "#0a2020",
+    "tab.inactiveForeground": "#3a7070",
+    "tab.border": "#0f2a2a44",
+
+    "panel.background": "#040e0e",
+    "panel.border": "#0f2a2a",
+    "terminal.background": "#040e0e",
+    "terminal.foreground": "#b8d8d4",
+    "terminal.ansiGreen": "#01A88D",
+    "terminal.ansiCyan": "#4dd4c0",
+    "terminal.ansiBlue": "#4488bb",
+    "terminalCursor.foreground": "#01A88D",
+
+    "statusBar.background": "#0d2b2b",
+    "statusBar.foreground": "#b8d8d4",
+    "statusBar.border": "#01A88D55",
+    "statusBar.noFolderBackground": "#081e1e",
+    "statusBarItem.hoverBackground": "#01A88D22",
+    "statusBarItem.activeBackground": "#01A88D33",
+
+    "focusBorder": "#01A88D",
+    "selection.background": "#01A88D40",
+    "scrollbarSlider.background": "#01A88D20",
+    "scrollbarSlider.hoverBackground": "#01A88D40"
+  }
+}
