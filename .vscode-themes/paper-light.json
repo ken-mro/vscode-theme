@@ -191,6 +191,15 @@
     "quickInput.foreground": "#3a2818",
     "quickInputTitle.background": "#F5F0E2",
     "pickerGroup.foreground": "#A0522D",
-    "pickerGroup.border": "#C8BA9A"
+    "pickerGroup.border": "#C8BA9A",
+    "chat.requestBackground": "#F5F0E2",
+    "chat.requestBorder": "#C8BA9A",
+    "chat.slashCommandBackground": "#E8DFCC",
+    "chat.slashCommandForeground": "#3a2818",
+    "chat.avatarBackground": "#A0522D",
+    "chat.avatarForeground": "#FAF6EE",
+    "chat.editedFileForeground": "#8B6508",
+    "symbolIcon.fileForeground": "#3a2818",
+    "symbolIcon.folderForeground": "#A0522D"
   }
 }
