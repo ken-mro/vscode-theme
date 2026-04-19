@@ -13,10 +13,15 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
   - [macOS / Linux (bash / zsh)](#macos--linux-bash--zsh)
   - [Windows (PowerShell)](#windows-powershell)
 - [Usage](#usage)
+- [Theme authoring simulator](#theme-authoring-simulator)
 - [How it works](#how-it-works)
 - [Files](#files)
 - [Version](#version)
   - [How the version flows](#how-the-version-flows)
+
+## Theme authoring simulator
+
+A companion web app lives in [simulator/](simulator/) for authoring new themes: it renders a VSCode UI mockup driven by a live color map, lets you click any component to edit its color keys with an inline WCAG contrast badge, exposes all 205 keys via a searchable grid, and exports a JSON file in the repo's `workbench.colorCustomizations` shape. See [simulator/README.md](simulator/README.md) for setup.
 
 ## Theme previews
 
