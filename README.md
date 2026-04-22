@@ -988,6 +988,250 @@ Ships with a set of dark and light themes out of the box ([.vscode-themes/](.vsc
 ---
 
 
+### T &mdash; Cobalt + crimson<!-- omit in toc -->
+
+
+> Deep cobalt blue with bright crimson accents &mdash; primary-color, high-contrast identity.
+
+
+<div class="vsc-card" style="--hvr-bg:#E4002B14;--hvr-fg:#F0F0F5;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;">
+  <div title="titleBar.activeBackground &mdash; #0057B8" style="background:#0057B8;color:#F0F0F5;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #E4002B;">
+    <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
+    <span title="titleBar.inactiveForeground &mdash; #a0a8c0" style="flex:1;text-align:center;font-size:11px;color:#a0a8c0;">vacode-theme &mdash; VS Code</span>
+  </div>
+  <div style="display:flex;height:150px;">
+    <div title="activityBar.background &mdash; #081028" style="background:#081028;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
+      <span title="activityBar.foreground &mdash; #E4002B" style="width:18px;height:18px;background:#E4002B;border-radius:3px;display:block;"></span>
+      <span title="activityBar.inactiveForeground &mdash; #5a6080" style="width:18px;height:18px;background:#5a6080;border-radius:3px;display:block;opacity:.55;"></span>
+      <span title="activityBar.inactiveForeground &mdash; #5a6080" style="width:18px;height:18px;background:#5a6080;border-radius:3px;display:block;opacity:.55;"></span>
+    </div>
+    <div title="sideBar.background &mdash; #122050" style="background:#122050;width:160px;padding:8px 0;border-right:1px solid #1a2450;">
+      <div title="sideBarTitle.foreground &mdash; #E4002B" style="color:#E4002B;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #E4002B" style="color:#E4002B;font-size:11px;padding:3px 10px 3px 22px;background:#E4002B22;">settings.json</div>
+      <div class="sb-item" title="sideBar.foreground &mdash; #F0F0F5" style="color:#F0F0F5;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
+      <div class="sb-item" title="sideBar.foreground &mdash; #F0F0F5" style="color:#F0F0F5;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;background:#0a1230;">
+      <div title="editorGroupHeader.tabsBackground &mdash; #122050" style="background:#122050;display:flex;border-bottom:1px solid #1a2450;">
+        <span title="tab.activeBackground &mdash; #0a1230" style="padding:5px 14px;font-size:11px;color:#F0F0F5;border-top:2px solid #E4002B;background:#0a1230;">settings.json</span>
+        <span class="tab-inactive" title="tab.inactiveForeground &mdash; #a0a8c0" style="padding:5px 14px;font-size:11px;color:#a0a8c0;background:#122050;">index.ts</span>
+      </div>
+      <div title="editor.background &mdash; #0a1230" style="flex:1;padding:10px 14px;color:#F0F0F5;line-height:1.7;">
+        <div style="font-size:11px;"><span title="editorLineNumber.foreground &mdash; #4a5075" style="color:#4a5075;margin-right:10px;">1</span><span title="accent &mdash; #E4002B" style="color:#E4002B;">"workbench.colorCustomizations"</span>: {</div>
+        <div style="font-size:11px;"><span title="editorLineNumber.foreground &mdash; #4a5075" style="color:#4a5075;margin-right:10px;">2</span>&nbsp;&nbsp;<span title="accent &mdash; #E4002B" style="color:#E4002B;">"titleBar.activeBackground"</span>: <span title="textLink.foreground &mdash; #5A9AE8" style="color:#5A9AE8;">"#0057B8"</span></div>
+        <div style="font-size:11px;"><span title="editorLineNumber.foreground &mdash; #4a5075" style="color:#4a5075;margin-right:10px;">3</span>}</div>
+      </div>
+    </div>
+  </div>
+  <div title="panel.background &mdash; #050a1a" style="background:#050a1a;">
+    <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #1a2450;">
+      <span title="panelTitle.inactiveForeground &mdash; #a0a8c0" style="color:#a0a8c0;padding:0 0 6px;line-height:1;">PROBLEMS</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a0a8c0" style="color:#a0a8c0;padding:0 0 6px;line-height:1;">OUTPUT</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a0a8c0" style="color:#a0a8c0;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
+      <span title="panelTitle.activeForeground &mdash; #F0F0F5" style="color:#F0F0F5;padding:0 0 5px;line-height:1;border-bottom:1px solid #E4002B;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a0a8c0" style="color:#a0a8c0;padding:0 0 6px;line-height:1;">GITLENS</span>
+    </div>
+    <div title="terminal.background &mdash; #050a1a" style="background:#050a1a;padding:10px 14px;color:#F0F0F5;font-size:11px;line-height:1.5;">
+      <div><span title="terminal.foreground &mdash; #F0F0F5" style="color:#F0F0F5;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #F0F0F5" style="color:#F0F0F5;">vscode-theme set cobalt-crimson</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #50C878" style="color:#50C878;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #F0F0F5" style="color:#F0F0F5;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.foreground &mdash; #F0F0F5" style="color:#F0F0F5;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #E4002B" style="display:inline-block;width:7px;height:12px;background:#E4002B;vertical-align:text-bottom;"></span></div>
+    </div>
+  </div>
+  <div title="statusBar.background &mdash; #0057B8" style="background:#0057B8;color:#F0F0F5;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #E4002B55;">
+    <span style="opacity:.85;">main</span>
+    <span style="opacity:.85;">No problems</span>
+  </div>
+</div>
+
+**Theme name:** `cobalt-crimson`
+**Accent:** `#E4002B` &middot; **Background:** `#0a1230` &middot; **Title bar:** `#0057B8`
+
+---
+
+
+### U &mdash; Canary + red (light)<!-- omit in toc -->
+
+
+> Canary-yellow light base with racing-red accents and a touch of Italian green.
+
+
+<div class="vsc-card" style="--hvr-bg:#B8001C14;--hvr-fg:#1a1200;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;">
+  <div title="titleBar.activeBackground &mdash; #FFDE00" style="background:#FFDE00;color:#1a1200;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #B8001C;">
+    <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
+    <span title="titleBar.inactiveForeground &mdash; #6a4a20" style="flex:1;text-align:center;font-size:11px;color:#6a4a20;">vacode-theme &mdash; VS Code</span>
+  </div>
+  <div style="display:flex;height:150px;">
+    <div title="activityBar.background &mdash; #FFDE00" style="background:#FFDE00;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
+      <span title="activityBar.foreground &mdash; #1a1200" style="width:18px;height:18px;background:#1a1200;border-radius:3px;display:block;"></span>
+      <span title="activityBar.inactiveForeground &mdash; #8a6020" style="width:18px;height:18px;background:#8a6020;border-radius:3px;display:block;opacity:.55;"></span>
+      <span title="activityBar.inactiveForeground &mdash; #8a6020" style="width:18px;height:18px;background:#8a6020;border-radius:3px;display:block;opacity:.55;"></span>
+    </div>
+    <div title="sideBar.background &mdash; #FBEEB0" style="background:#FBEEB0;width:160px;padding:8px 0;border-right:1px solid #E5C890;">
+      <div title="sideBarTitle.foreground &mdash; #B8001C" style="color:#B8001C;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #B8001C" style="color:#B8001C;font-size:11px;padding:3px 10px 3px 22px;background:#B8001C22;">settings.json</div>
+      <div class="sb-item" title="sideBar.foreground &mdash; #1a1200" style="color:#1a1200;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
+      <div class="sb-item" title="sideBar.foreground &mdash; #1a1200" style="color:#1a1200;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;background:#FFF8D6;">
+      <div title="editorGroupHeader.tabsBackground &mdash; #FBEEB0" style="background:#FBEEB0;display:flex;border-bottom:1px solid #E5C890;">
+        <span title="tab.activeBackground &mdash; #FFF8D6" style="padding:5px 14px;font-size:11px;color:#1a1200;border-top:2px solid #B8001C;background:#FFF8D6;">settings.json</span>
+        <span class="tab-inactive" title="tab.inactiveForeground &mdash; #6a4a20" style="padding:5px 14px;font-size:11px;color:#6a4a20;background:#FBEEB0;">index.ts</span>
+      </div>
+      <div title="editor.background &mdash; #FFF8D6" style="flex:1;padding:10px 14px;color:#1a1200;line-height:1.7;">
+        <div style="font-size:11px;"><span title="editorLineNumber.foreground &mdash; #b89a68" style="color:#b89a68;margin-right:10px;">1</span><span title="accent &mdash; #B8001C" style="color:#B8001C;">"workbench.colorCustomizations"</span>: {</div>
+        <div style="font-size:11px;"><span title="editorLineNumber.foreground &mdash; #b89a68" style="color:#b89a68;margin-right:10px;">2</span>&nbsp;&nbsp;<span title="accent &mdash; #B8001C" style="color:#B8001C;">"titleBar.activeBackground"</span>: <span title="textLink.foreground &mdash; #B8001C" style="color:#B8001C;">"#FFDE00"</span></div>
+        <div style="font-size:11px;"><span title="editorLineNumber.foreground &mdash; #b89a68" style="color:#b89a68;margin-right:10px;">3</span>}</div>
+      </div>
+    </div>
+  </div>
+  <div title="panel.background &mdash; #F5E280" style="background:#F5E280;">
+    <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #E5C890;">
+      <span title="panelTitle.inactiveForeground &mdash; #6a4a20" style="color:#6a4a20;padding:0 0 6px;line-height:1;">PROBLEMS</span>
+      <span title="panelTitle.inactiveForeground &mdash; #6a4a20" style="color:#6a4a20;padding:0 0 6px;line-height:1;">OUTPUT</span>
+      <span title="panelTitle.inactiveForeground &mdash; #6a4a20" style="color:#6a4a20;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
+      <span title="panelTitle.activeForeground &mdash; #1a1200" style="color:#1a1200;padding:0 0 5px;line-height:1;border-bottom:1px solid #B8001C;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #6a4a20" style="color:#6a4a20;padding:0 0 6px;line-height:1;">GITLENS</span>
+    </div>
+    <div title="terminal.background &mdash; #F5E280" style="background:#F5E280;padding:10px 14px;color:#1a1200;font-size:11px;line-height:1.5;">
+      <div><span title="terminal.foreground &mdash; #1a1200" style="color:#1a1200;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #1a1200" style="color:#1a1200;">vscode-theme set canary-red</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #008C45" style="color:#008C45;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #1a1200" style="color:#1a1200;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.foreground &mdash; #1a1200" style="color:#1a1200;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #B8001C" style="display:inline-block;width:7px;height:12px;background:#B8001C;vertical-align:text-bottom;"></span></div>
+    </div>
+  </div>
+  <div title="statusBar.background &mdash; #FFDE00" style="background:#FFDE00;color:#1a1200;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #B8001C55;">
+    <span style="opacity:.85;">main</span>
+    <span style="opacity:.85;">No problems</span>
+  </div>
+</div>
+
+**Theme name:** `canary-red`
+**Accent:** `#B8001C` &middot; **Background:** `#FFF8D6` &middot; **Title bar:** `#FFDE00`
+
+---
+
+
+### V &mdash; Ember gold<!-- omit in toc -->
+
+
+> Antique gold over warm charcoal with amber-ember highlights &mdash; muted and glowing.
+
+
+<div class="vsc-card" style="--hvr-bg:#C9A84E14;--hvr-fg:#f0e0b8;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;">
+  <div title="titleBar.activeBackground &mdash; #18130a" style="background:#18130a;color:#f0e0b8;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #C9A84E;">
+    <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
+    <span title="titleBar.inactiveForeground &mdash; #6a604a" style="flex:1;text-align:center;font-size:11px;color:#6a604a;">vacode-theme &mdash; VS Code</span>
+  </div>
+  <div style="display:flex;height:150px;">
+    <div title="activityBar.background &mdash; #0e0e14" style="background:#0e0e14;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
+      <span title="activityBar.foreground &mdash; #C9A84E" style="width:18px;height:18px;background:#C9A84E;border-radius:3px;display:block;"></span>
+      <span title="activityBar.inactiveForeground &mdash; #6a604a" style="width:18px;height:18px;background:#6a604a;border-radius:3px;display:block;opacity:.55;"></span>
+      <span title="activityBar.inactiveForeground &mdash; #6a604a" style="width:18px;height:18px;background:#6a604a;border-radius:3px;display:block;opacity:.55;"></span>
+    </div>
+    <div title="sideBar.background &mdash; #141418" style="background:#141418;width:160px;padding:8px 0;border-right:1px solid #2a2520;">
+      <div title="sideBarTitle.foreground &mdash; #C9A84E" style="color:#C9A84E;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #C9A84E" style="color:#C9A84E;font-size:11px;padding:3px 10px 3px 22px;background:#C9A84E22;">settings.json</div>
+      <div class="sb-item" title="sideBar.foreground &mdash; #f0e0b8" style="color:#f0e0b8;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
+      <div class="sb-item" title="sideBar.foreground &mdash; #f0e0b8" style="color:#f0e0b8;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;background:#0c0c10;">
+      <div title="editorGroupHeader.tabsBackground &mdash; #141418" style="background:#141418;display:flex;border-bottom:1px solid #2a2520;">
+        <span title="tab.activeBackground &mdash; #0c0c10" style="padding:5px 14px;font-size:11px;color:#f0e0b8;border-top:2px solid #C9A84E;background:#0c0c10;">settings.json</span>
+        <span class="tab-inactive" title="tab.inactiveForeground &mdash; #a09478" style="padding:5px 14px;font-size:11px;color:#a09478;background:#141418;">index.ts</span>
+      </div>
+      <div title="editor.background &mdash; #0c0c10" style="flex:1;padding:10px 14px;color:#f0e0b8;line-height:1.7;">
+        <div style="font-size:11px;"><span title="editorLineNumber.foreground &mdash; #5a4e3a" style="color:#5a4e3a;margin-right:10px;">1</span><span title="accent &mdash; #C9A84E" style="color:#C9A84E;">"workbench.colorCustomizations"</span>: {</div>
+        <div style="font-size:11px;"><span title="editorLineNumber.foreground &mdash; #5a4e3a" style="color:#5a4e3a;margin-right:10px;">2</span>&nbsp;&nbsp;<span title="accent &mdash; #C9A84E" style="color:#C9A84E;">"titleBar.activeBackground"</span>: <span title="textLink.foreground &mdash; #D9802F" style="color:#D9802F;">"#18130a"</span></div>
+        <div style="font-size:11px;"><span title="editorLineNumber.foreground &mdash; #5a4e3a" style="color:#5a4e3a;margin-right:10px;">3</span>}</div>
+      </div>
+    </div>
+  </div>
+  <div title="panel.background &mdash; #080810" style="background:#080810;">
+    <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #2a2520;">
+      <span title="panelTitle.inactiveForeground &mdash; #a09478" style="color:#a09478;padding:0 0 6px;line-height:1;">PROBLEMS</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a09478" style="color:#a09478;padding:0 0 6px;line-height:1;">OUTPUT</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a09478" style="color:#a09478;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
+      <span title="panelTitle.activeForeground &mdash; #f0e0b8" style="color:#f0e0b8;padding:0 0 5px;line-height:1;border-bottom:1px solid #C9A84E;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a09478" style="color:#a09478;padding:0 0 6px;line-height:1;">GITLENS</span>
+    </div>
+    <div title="terminal.background &mdash; #080810" style="background:#080810;padding:10px 14px;color:#f0e0b8;font-size:11px;line-height:1.5;">
+      <div><span title="terminal.foreground &mdash; #f0e0b8" style="color:#f0e0b8;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #f0e0b8" style="color:#f0e0b8;">vscode-theme set ember-gold</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #8BC078" style="color:#8BC078;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #f0e0b8" style="color:#f0e0b8;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.foreground &mdash; #f0e0b8" style="color:#f0e0b8;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #C9A84E" style="display:inline-block;width:7px;height:12px;background:#C9A84E;vertical-align:text-bottom;"></span></div>
+    </div>
+  </div>
+  <div title="statusBar.background &mdash; #18130a" style="background:#18130a;color:#f0e0b8;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #C9A84E55;">
+    <span style="opacity:.85;">main</span>
+    <span style="opacity:.85;">No problems</span>
+  </div>
+</div>
+
+**Theme name:** `ember-gold`
+**Accent:** `#C9A84E` &middot; **Background:** `#0c0c10` &middot; **Title bar:** `#18130a`
+
+---
+
+
+### W &mdash; Alpine sunset<!-- omit in toc -->
+
+
+> Alpine twilight purple with sunset-red accents over mountain indigo.
+
+
+<div class="vsc-card" style="--hvr-bg:#E4002B14;--hvr-fg:#ede0f5;font-family:Menlo,Consolas,monospace;font-size:12px;border-radius:10px;overflow:hidden;max-width:640px;">
+  <div title="titleBar.activeBackground &mdash; #2a1a55" style="background:#2a1a55;color:#ede0f5;padding:7px 14px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #E4002B;">
+    <span style="display:flex;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
+    <span title="titleBar.inactiveForeground &mdash; #a898c8" style="flex:1;text-align:center;font-size:11px;color:#a898c8;">vacode-theme &mdash; VS Code</span>
+  </div>
+  <div style="display:flex;height:150px;">
+    <div title="activityBar.background &mdash; #1a1030" style="background:#1a1030;width:36px;display:flex;flex-direction:column;align-items:center;padding:8px 0;gap:10px;">
+      <span title="activityBar.foreground &mdash; #E4002B" style="width:18px;height:18px;background:#E4002B;border-radius:3px;display:block;"></span>
+      <span title="activityBar.inactiveForeground &mdash; #6a5a85" style="width:18px;height:18px;background:#6a5a85;border-radius:3px;display:block;opacity:.55;"></span>
+      <span title="activityBar.inactiveForeground &mdash; #6a5a85" style="width:18px;height:18px;background:#6a5a85;border-radius:3px;display:block;opacity:.55;"></span>
+    </div>
+    <div title="sideBar.background &mdash; #231a48" style="background:#231a48;width:160px;padding:8px 0;border-right:1px solid #3a2a68;">
+      <div title="sideBarTitle.foreground &mdash; #E4002B" style="color:#E4002B;font-size:10px;font-weight:700;padding:0 10px 6px;letter-spacing:.08em;">EXPLORER</div>
+      <div class="sb-item sb-active" title="list.activeSelectionForeground (accent) &mdash; #E4002B" style="color:#E4002B;font-size:11px;padding:3px 10px 3px 22px;background:#E4002B22;">settings.json</div>
+      <div class="sb-item" title="sideBar.foreground &mdash; #ede0f5" style="color:#ede0f5;font-size:11px;padding:3px 10px 3px 22px;">src/index.ts</div>
+      <div class="sb-item" title="sideBar.foreground &mdash; #ede0f5" style="color:#ede0f5;font-size:11px;padding:3px 10px 3px 22px;">package.json</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;background:#1a1438;">
+      <div title="editorGroupHeader.tabsBackground &mdash; #231a48" style="background:#231a48;display:flex;border-bottom:1px solid #3a2a68;">
+        <span title="tab.activeBackground &mdash; #1a1438" style="padding:5px 14px;font-size:11px;color:#ede0f5;border-top:2px solid #E4002B;background:#1a1438;">settings.json</span>
+        <span class="tab-inactive" title="tab.inactiveForeground &mdash; #a898c8" style="padding:5px 14px;font-size:11px;color:#a898c8;background:#231a48;">index.ts</span>
+      </div>
+      <div title="editor.background &mdash; #1a1438" style="flex:1;padding:10px 14px;color:#ede0f5;line-height:1.7;">
+        <div style="font-size:11px;"><span title="editorLineNumber.foreground &mdash; #5a4885" style="color:#5a4885;margin-right:10px;">1</span><span title="accent &mdash; #E4002B" style="color:#E4002B;">"workbench.colorCustomizations"</span>: {</div>
+        <div style="font-size:11px;"><span title="editorLineNumber.foreground &mdash; #5a4885" style="color:#5a4885;margin-right:10px;">2</span>&nbsp;&nbsp;<span title="accent &mdash; #E4002B" style="color:#E4002B;">"titleBar.activeBackground"</span>: <span title="textLink.foreground &mdash; #7088F0" style="color:#7088F0;">"#2a1a55"</span></div>
+        <div style="font-size:11px;"><span title="editorLineNumber.foreground &mdash; #5a4885" style="color:#5a4885;margin-right:10px;">3</span>}</div>
+      </div>
+    </div>
+  </div>
+  <div title="panel.background &mdash; #0e0a25" style="background:#0e0a25;">
+    <div style="display:flex;align-items:flex-end;gap:16px;padding:8px 14px 0;font-size:10px;font-weight:700;letter-spacing:.08em;border-bottom:1px solid #3a2a68;">
+      <span title="panelTitle.inactiveForeground &mdash; #a898c8" style="color:#a898c8;padding:0 0 6px;line-height:1;">PROBLEMS</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a898c8" style="color:#a898c8;padding:0 0 6px;line-height:1;">OUTPUT</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a898c8" style="color:#a898c8;padding:0 0 6px;line-height:1;">DEBUG CONSOLE</span>
+      <span title="panelTitle.activeForeground &mdash; #ede0f5" style="color:#ede0f5;padding:0 0 5px;line-height:1;border-bottom:1px solid #E4002B;margin-bottom:-1px;">TERMINAL</span>
+      <span title="panelTitle.inactiveForeground &mdash; #a898c8" style="color:#a898c8;padding:0 0 6px;line-height:1;">GITLENS</span>
+    </div>
+    <div title="terminal.background &mdash; #0e0a25" style="background:#0e0a25;padding:10px 14px;color:#ede0f5;font-size:11px;line-height:1.5;">
+      <div><span title="terminal.foreground &mdash; #ede0f5" style="color:#ede0f5;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminal.foreground &mdash; #ede0f5" style="color:#ede0f5;">vscode-theme set alpine-sunset</span></div>
+      <div><span title="terminal.ansiGreen &mdash; #66D090" style="color:#66D090;font-weight:700;">&check;</span> <span title="terminal.foreground &mdash; #ede0f5" style="color:#ede0f5;">Theme applied to workspace.</span></div>
+      <div><span title="terminal.foreground &mdash; #ede0f5" style="color:#ede0f5;">PS C:\experiment\vscode-theme&gt;</span> <span title="terminalCursor.foreground &mdash; #E4002B" style="display:inline-block;width:7px;height:12px;background:#E4002B;vertical-align:text-bottom;"></span></div>
+    </div>
+  </div>
+  <div title="statusBar.background &mdash; #2a1a55" style="background:#2a1a55;color:#ede0f5;height:22px;display:flex;align-items:center;padding:0 10px;gap:12px;font-size:11px;border-top:1px solid #E4002B55;">
+    <span style="opacity:.85;">main</span>
+    <span style="opacity:.85;">No problems</span>
+  </div>
+</div>
+
+**Theme name:** `alpine-sunset`
+**Accent:** `#E4002B` &middot; **Background:** `#1a1438` &middot; **Title bar:** `#2a1a55`
+
+---
+
+
 ## Using themes as workspace identity markers
 
 Because each theme paints the title bar, activity bar, and status bar with a strong accent, you can use them as *visual environment tags* across VSCode windows — at a glance you always know whether you're looking at prod, staging, or your scratchpad. Apply a theme globally for your default, and override per-workspace with `vscode-theme set <name>` inside any project folder.
@@ -1154,6 +1398,10 @@ The bash version uses Python (`python3` or `python`) for JSON merging; make sure
 | [.vscode-themes/leather-orange-light.json](.vscode-themes/leather-orange-light.json) | Theme Q — Leather orange (light)                              |
 | [.vscode-themes/cocoa-gold-light.json](.vscode-themes/cocoa-gold-light.json) | Theme R — Cocoa gold (light)                                          |
 | [.vscode-themes/espresso-green-dark.json](.vscode-themes/espresso-green-dark.json) | Theme S — Espresso green (dark)                                 |
+| [.vscode-themes/cobalt-crimson.json](.vscode-themes/cobalt-crimson.json) | Theme T — Cobalt + crimson                                            |
+| [.vscode-themes/canary-red.json](.vscode-themes/canary-red.json)         | Theme U — Canary + red (light)                                        |
+| [.vscode-themes/ember-gold.json](.vscode-themes/ember-gold.json)         | Theme V — Ember gold                                                  |
+| [.vscode-themes/alpine-sunset.json](.vscode-themes/alpine-sunset.json)   | Theme W — Alpine sunset                                               |
 
 ---
 
