@@ -12,6 +12,7 @@
 # Usage:
 #   vscode-theme list
 #   vscode-theme status
+#   vscode-theme set                       # interactive picker
 #   vscode-theme set navy-orange [-Global]
 #   vscode-theme reset           [-Global]
 #   vscode-theme version
@@ -70,30 +71,29 @@ function _VT-ReadColor ([string]$file, [string]$key) {
     return $colorKey.Value
 }
 
-# Print one theme's row as a colored status-bar-style block + accent hint.
-# Falls back to a dim plain row when truecolor isn't available.
-function _VT-ColoredBlock ([string]$name, [string]$bgHex, [string]$fgHex, [string]$accentHex) {
+# Build (but don't write) a single theme row: caller-supplied prefix, then a
+# colored status-bar-style block + accent hint. Falls back to a dim plain row
+# when truecolor isn't available. Returns the formatted string.
+function _VT-FormatBlock ([string]$prefix, [string]$name, [string]$bgHex, [string]$fgHex, [string]$accentHex) {
     $padded = ' ' + $name.PadRight(20) + ' '
     $bg = _VT-HexToRGB $bgHex
     $fg = _VT-HexToRGB $fgHex
     $ac = _VT-HexToRGB $accentHex
+    $esc = [char]27
+    $reset = "$esc[0m"
     if ((_VT-SupportsTrueColor) -and $bg -and $fg) {
-        $esc = [char]27
-        $reset = "$esc[0m"
         $block = "$esc[38;2;$($fg[0]);$($fg[1]);$($fg[2])m$esc[48;2;$($bg[0]);$($bg[1]);$($bg[2])m${padded}${reset}"
-        if ($ac) {
-            $accentPart = "  $esc[90maccent${reset} $esc[38;2;$($ac[0]);$($ac[1]);$($ac[2])m${accentHex}${reset}"
-        } else {
-            $accentPart = ''
-        }
-        Write-Host "  ${block}${accentPart}"
+        $accentPart = if ($ac) { "  $esc[90maccent${reset} $esc[38;2;$($ac[0]);$($ac[1]);$($ac[2])m${accentHex}${reset}" } else { '' }
+        return "${prefix}${block}${accentPart}"
     } else {
-        if ($accentHex) {
-            _VT-Dim "* $name  (accent $accentHex)"
-        } else {
-            _VT-Dim "* $name"
-        }
+        if ($accentHex) { return "${prefix}$esc[90m* $name  (accent $accentHex)${reset}" }
+        return                  "${prefix}$esc[90m* $name${reset}"
     }
+}
+
+# Print one theme's row using the same 2-space indent as the rest of the tool.
+function _VT-ColoredBlock ([string]$name, [string]$bgHex, [string]$fgHex, [string]$accentHex) {
+    Write-Host (_VT-FormatBlock '  ' $name $bgHex $fgHex $accentHex)
 }
 
 # ── path resolution ───────────────────────────────────────────────────────────
@@ -316,6 +316,180 @@ function _VT-CmdStatus {
     Write-Host ""
 }
 
+function _VT-CmdSetInteractive ([bool]$isGlobal) {
+    $settingsFile = if ($isGlobal) { _VT-GlobalSettingsPath } else { _VT-WorkspaceSettingsPath }
+    $scope        = if ($isGlobal) { 'global' }               else { 'workspace' }
+
+    if (-not (Test-Path $script:VT_THEME_DIR -PathType Container)) {
+        _VT-Err "Theme directory not found: $script:VT_THEME_DIR"
+        return
+    }
+    $files = @(Get-ChildItem $script:VT_THEME_DIR -Filter '*.json' -File)
+    if ($files.Count -eq 0) {
+        _VT-Err "No theme files found in $script:VT_THEME_DIR"
+        return
+    }
+    $themes  = @($files | ForEach-Object { $_.BaseName })
+    $bgs     = @($files | ForEach-Object { _VT-ReadColor $_.FullName 'statusBar.background' })
+    $fgs     = @($files | ForEach-Object { _VT-ReadColor $_.FullName 'statusBar.foreground' })
+    $accents = @($files | ForEach-Object { _VT-ReadColor $_.FullName 'activityBar.foreground' })
+    $count   = $themes.Count
+
+    # Some hosts (e.g. Windows PowerShell ISE) don't support [Console]::ReadKey.
+    try {
+        [Console]::TreatControlCAsInput | Out-Null
+    } catch {
+        _VT-Err "Interactive picker is not supported in this host."
+        _VT-Dim "Pass a theme name explicitly, e.g.: vscode-theme set $($themes[0])"
+        return
+    }
+
+    # Start on the currently-managed theme if possible, else the first one.
+    $current = _VT-GetManagedTheme $settingsFile
+    $idx = 0
+    if ($current) {
+        for ($i = 0; $i -lt $count; $i++) {
+            if ($themes[$i] -eq $current) { $idx = $i; break }
+        }
+    }
+
+    _VT-Head "Select a theme for $scope"
+    _VT-Dim "Up/Down or j/k to navigate * Enter to confirm * Esc or q to cancel"
+    Write-Host ""
+
+    $settingsDir = Split-Path $settingsFile -Parent
+    if ($settingsDir -and -not (Test-Path $settingsDir)) {
+        New-Item -ItemType Directory -Force $settingsDir | Out-Null
+    }
+
+    # Byte-exact snapshot so cancel restores whatever was there (or deletes it).
+    $existed  = Test-Path $settingsFile -PathType Leaf
+    $snapshot = if ($existed) { [System.IO.File]::ReadAllText($settingsFile) } else { $null }
+
+    # Viewport: when the theme list is taller than the terminal, render only a
+    # window of $bodyHeight rows that always contains $idx, with up/down hint
+    # lines indicating how many themes are off-screen.
+    $termH = try { [Console]::WindowHeight } catch { 24 }
+    if ($termH -le 0) { $termH = 24 }
+    $vh = $termH - 6   # 3 header lines + 2 indicator lines + 1 prompt slot
+    if ($vh -lt 3) { $vh = 3 }
+    $bodyHeight    = [Math]::Min($count, $vh)
+    $showScroll    = $count -gt $bodyHeight
+    $linesPerFrame = if ($showScroll) { $bodyHeight + 2 } else { $bodyHeight }
+
+    # Anchor $top so the initial $idx is inside the visible window.
+    $top = 0
+    if ($idx -ge $top + $bodyHeight) {
+        $top = $idx - $bodyHeight + 1
+    }
+    if (($count -gt $bodyHeight) -and ($top -gt $count - $bodyHeight)) {
+        $top = $count - $bodyHeight
+    }
+    if ($top -lt 0) { $top = 0 }
+
+    # Apply the starting preview so VSCode reflects the highlighted row.
+    _VT-MergeSettings (Join-Path $script:VT_THEME_DIR "$($themes[$idx]).json") $settingsFile $themes[$idx] | Out-Null
+
+    $esc        = [char]27
+    $cancelled  = $false
+    $first      = $true
+    $prevTreat  = [Console]::TreatControlCAsInput
+    [Console]::TreatControlCAsInput = $true
+
+    try {
+        while ($true) {
+            if (-not $first) {
+                Write-Host "$esc[${linesPerFrame}A$esc[0J" -NoNewline
+            }
+            $first = $false
+
+            if ($showScroll) {
+                if ($top -gt 0) {
+                    Write-Host "  $esc[90m^ $top more above$esc[0m"
+                } else {
+                    Write-Host ''
+                }
+            }
+
+            $end = $top + $bodyHeight
+            for ($i = $top; $i -lt $end; $i++) {
+                $rowPrefix = if ($i -eq $idx) { "  $esc[36m>$esc[0m " } else { '    ' }
+                Write-Host (_VT-FormatBlock $rowPrefix $themes[$i] $bgs[$i] $fgs[$i] $accents[$i])
+            }
+
+            if ($showScroll) {
+                $below = $count - $end
+                if ($below -gt 0) {
+                    Write-Host "  $esc[90mv $below more below$esc[0m"
+                } else {
+                    Write-Host ''
+                }
+            }
+
+            $key = [Console]::ReadKey($true)
+
+            # Ctrl-C: honoured as cancel.
+            if ((($key.Modifiers -band [ConsoleModifiers]::Control) -ne 0) `
+                -and ($key.Key -eq [ConsoleKey]::C)) {
+                $cancelled = $true
+                break
+            }
+
+            $doBreak = $false
+            switch ($key.Key) {
+                ([ConsoleKey]::UpArrow)   { if ($idx -gt 0)          { $idx-- } }
+                ([ConsoleKey]::DownArrow) { if ($idx -lt $count - 1) { $idx++ } }
+                ([ConsoleKey]::Enter)     { $doBreak = $true }
+                ([ConsoleKey]::Escape)    { $cancelled = $true; $doBreak = $true }
+                default {
+                    switch ([string]$key.KeyChar) {
+                        'k' { if ($idx -gt 0)          { $idx-- } }
+                        'K' { if ($idx -gt 0)          { $idx-- } }
+                        'j' { if ($idx -lt $count - 1) { $idx++ } }
+                        'J' { if ($idx -lt $count - 1) { $idx++ } }
+                        'q' { $cancelled = $true; $doBreak = $true }
+                        'Q' { $cancelled = $true; $doBreak = $true }
+                    }
+                }
+            }
+            if ($doBreak) { break }
+
+            # Scroll the viewport just enough to keep $idx visible.
+            if ($idx -lt $top)                { $top = $idx }
+            if ($idx -ge $top + $bodyHeight)  { $top = $idx - $bodyHeight + 1 }
+            if ($top -lt 0) { $top = 0 }
+            if (($count -gt $bodyHeight) -and ($top -gt $count - $bodyHeight)) {
+                $top = $count - $bodyHeight
+            }
+
+            _VT-MergeSettings (Join-Path $script:VT_THEME_DIR "$($themes[$idx]).json") $settingsFile $themes[$idx] | Out-Null
+        }
+    } finally {
+        [Console]::TreatControlCAsInput = $prevTreat
+    }
+
+    Write-Host ""
+
+    if ($cancelled) {
+        if ($existed) {
+            [System.IO.File]::WriteAllText($settingsFile, $snapshot)
+        } elseif (Test-Path $settingsFile -PathType Leaf) {
+            Remove-Item $settingsFile -Force
+        }
+        _VT-Info "Cancelled. Reverted to previous $scope state."
+        Write-Host ""
+        return
+    }
+
+    Write-Host "  " -NoNewline
+    Write-Host "v" -ForegroundColor Green -NoNewline
+    Write-Host "  Theme " -NoNewline
+    Write-Host $themes[$idx] -ForegroundColor Cyan -NoNewline
+    Write-Host " applied to $scope."
+    _VT-Dim "Reload VSCode window if colors didn't update (Ctrl+Shift+P -> Reload Window)."
+    Write-Host ""
+}
+
 function _VT-CmdSet ([string]$themeName, [bool]$isGlobal) {
     if (-not $themeName) {
         _VT-Err "Usage: vscode-theme set <theme-name> [-Global]"
@@ -454,11 +628,16 @@ function _VT-CmdHelp {
     Write-Host "        Show the currently applied theme for both global and workspace"
     Write-Host "        settings, including whether a pre-existing backup is stored."
     Write-Host ""
-    Write-Host "    " -NoNewline; Write-Host "set <theme-name> [-Global]" -ForegroundColor Cyan
+    Write-Host "    " -NoNewline; Write-Host "set [theme-name] [-Global]" -ForegroundColor Cyan
     Write-Host "        Apply a theme by name (the JSON filename without .json)."
     Write-Host "        Defaults to workspace scope. Use -Global for global scope."
     Write-Host "        If colorCustomizations already exist and were not set by this"
     Write-Host "        tool, they are backed up inside settings.json before overwriting."
+    Write-Host ""
+    Write-Host "        Omit <theme-name> to open an interactive picker:"
+    Write-Host "          Up/Down or j/k to navigate (theme applies live on each step)"
+    Write-Host "          Enter          to confirm"
+    Write-Host "          Esc or q       to cancel and revert to the previous state"
     Write-Host ""
     Write-Host "    " -NoNewline; Write-Host "reset [-Global]" -ForegroundColor Cyan
     Write-Host "        Remove the applied theme from workspace (default) or global"
@@ -481,6 +660,8 @@ function _VT-CmdHelp {
     Write-Host ""
     Write-Host "  EXAMPLES" -ForegroundColor White
     Write-Host "    vscode-theme list"
+    Write-Host "    vscode-theme set                            # interactive picker"
+    Write-Host "    vscode-theme set -Global                    # picker, global scope"
     Write-Host "    vscode-theme set navy-orange"
     Write-Host "    vscode-theme set squidink-yellow -Global"
     Write-Host "    vscode-theme status"
@@ -508,7 +689,13 @@ function vscode-theme {
     switch ($Command.ToLower()) {
         'list'    { _VT-CmdList }
         'status'  { _VT-CmdStatus }
-        'set'     { _VT-CmdSet $ThemeName $isGlobal }
+        'set'     {
+            if (-not $ThemeName) {
+                _VT-CmdSetInteractive $isGlobal
+            } else {
+                _VT-CmdSet $ThemeName $isGlobal
+            }
+        }
         'reset'   { _VT-CmdReset $isGlobal }
         'version' { _VT-CmdVersion }
         { $_ -in '--version', '-v' } { _VT-CmdVersion }

@@ -1575,12 +1575,25 @@ The same subcommands work in both shells. Only the global-scope flag differs in 
 | ---------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | List available themes                    | `vscode-theme list`                                                                 | `vscode-theme list`                                                                 |
 | Show current status (global + workspace) | `vscode-theme status`                                                               | `vscode-theme status`                                                               |
+| Pick a theme interactively (workspace)   | `vscode-theme set`                                                                  | `vscode-theme set`                                                                  |
+| Pick a theme interactively (global)      | `vscode-theme set --global`<br>`vscode-theme set -g`                                | `vscode-theme set -Global`<br>`vscode-theme set -g`                                 |
 | Apply a theme to the current workspace   | `vscode-theme set navy-orange`                                                      | `vscode-theme set navy-orange`                                                      |
 | Apply a theme globally                   | `vscode-theme set navy-orange --global`<br>`vscode-theme set navy-orange -g`        | `vscode-theme set navy-orange -Global`<br>`vscode-theme set navy-orange -g`         |
 | Reset workspace theme                    | `vscode-theme reset`                                                                | `vscode-theme reset`                                                                |
 | Reset global theme                       | `vscode-theme reset --global`<br>`vscode-theme reset -g`                            | `vscode-theme reset -Global`<br>`vscode-theme reset -g`                             |
 | Show version                             | `vscode-theme version`<br>`vscode-theme --version`<br>`vscode-theme -v`             | `vscode-theme version`<br>`vscode-theme --version`<br>`vscode-theme -v`             |
 | Show help                                | `vscode-theme help`<br>`vscode-theme --help`<br>`vscode-theme -h`<br>`vscode-theme` | `vscode-theme help`<br>`vscode-theme --help`<br>`vscode-theme -h`<br>`vscode-theme` |
+
+**Interactive picker.** `vscode-theme set` with no theme name opens an in-terminal picker that previews each theme live in VSCode as you move through the list.
+
+| Key                 | Action                                                              |
+| ------------------- | ------------------------------------------------------------------- |
+| `↑` / `↓` (or `k` / `j`) | Move the highlight (the selected theme is applied immediately) |
+| `Enter`             | Keep the currently-highlighted theme                                |
+| `Esc` or `q`        | Cancel and revert `settings.json` to its pre-picker state           |
+| `Ctrl+C`            | Same as cancel                                                      |
+
+Cancelling restores the file byte-for-byte: if no `settings.json` existed before, it is removed again; if one existed, its previous contents (including any `__vscode_theme_backup`) are restored untouched.
 
 **Note on the global flag.** PowerShell uses single-dash CamelCase for switches (`-Global`), which is its native convention — `--global` is not valid PowerShell syntax. The bash script accepts `-g` or `--global`; the PowerShell script accepts `-g` or `-Global` (case-insensitive, so `-global` works too). The short form `-g` is identical in both shells.
 

@@ -1574,12 +1574,25 @@ if (-not ((Get-Content $PROFILE -ErrorAction SilentlyContinue) -contains $line))
 | ----------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | 利用可能なテーマを一覧表示                      | `vscode-theme list`                                                                 | `vscode-theme list`                                                                 |
 | 現在の状態を表示（グローバル + ワークスペース） | `vscode-theme status`                                                               | `vscode-theme status`                                                               |
+| 対話的にテーマを選択（ワークスペース）          | `vscode-theme set`                                                                  | `vscode-theme set`                                                                  |
+| 対話的にテーマを選択（グローバル）              | `vscode-theme set --global`<br>`vscode-theme set -g`                                | `vscode-theme set -Global`<br>`vscode-theme set -g`                                 |
 | 現在のワークスペースにテーマを適用              | `vscode-theme set navy-orange`                                                      | `vscode-theme set navy-orange`                                                      |
 | テーマをグローバルに適用                        | `vscode-theme set navy-orange --global`<br>`vscode-theme set navy-orange -g`        | `vscode-theme set navy-orange -Global`<br>`vscode-theme set navy-orange -g`         |
 | ワークスペースのテーマをリセット                | `vscode-theme reset`                                                                | `vscode-theme reset`                                                                |
 | グローバルのテーマをリセット                    | `vscode-theme reset --global`<br>`vscode-theme reset -g`                            | `vscode-theme reset -Global`<br>`vscode-theme reset -g`                             |
 | バージョンを表示                                | `vscode-theme version`<br>`vscode-theme --version`<br>`vscode-theme -v`             | `vscode-theme version`<br>`vscode-theme --version`<br>`vscode-theme -v`             |
 | ヘルプを表示                                    | `vscode-theme help`<br>`vscode-theme --help`<br>`vscode-theme -h`<br>`vscode-theme` | `vscode-theme help`<br>`vscode-theme --help`<br>`vscode-theme -h`<br>`vscode-theme` |
+
+**対話型ピッカー。** テーマ名を付けずに `vscode-theme set` を実行すると、ターミナル内でピッカーが開きます。カーソルを移動するたびに VSCode 側へそのテーマがリアルタイムで適用されるので、見た目を確認しながら選べます。
+
+| キー                      | 動作                                                                  |
+| ------------------------- | --------------------------------------------------------------------- |
+| `↑` / `↓`（または `k` / `j`） | ハイライトを移動（選択中のテーマが即座に適用される）                  |
+| `Enter`                   | ハイライト中のテーマで確定                                            |
+| `Esc` または `q`          | キャンセルし、`settings.json` をピッカー起動前の状態へ戻す            |
+| `Ctrl+C`                  | キャンセルと同じ扱い                                                  |
+
+キャンセル時はファイルをバイト単位で元に戻します。もともと `settings.json` が無かった場合は削除し、存在していた場合は `__vscode_theme_backup` などを含むすべての中身をそのまま復元します。
 
 **グローバルフラグについての注意。** PowerShell ではスイッチにシングルダッシュ＋キャメルケース（`-Global`）を使うのがネイティブの慣習で、`--global` は PowerShell の文法としては有効ではありません。bash スクリプトは `-g` と `--global` を、PowerShell スクリプトは `-g` と `-Global`（大文字小文字を区別しないので `-global` でも可）を受け付けます。短縮形 `-g` は両シェルで共通です。
 

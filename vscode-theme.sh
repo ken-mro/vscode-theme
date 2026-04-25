@@ -8,6 +8,7 @@
 #
 # Usage:
 #   vscode-theme status
+#   vscode-theme set                           # interactive picker
 #   vscode-theme set navy-orange [-g | --global]
 #   vscode-theme reset          [-g | --global]
 #   vscode-theme list
@@ -59,10 +60,12 @@ _vt_read_color() {
     | sed -E 's/.*"(#[0-9A-Fa-f]{6})[0-9A-Fa-f]*"/\1/'
 }
 
-# Print a single theme's row as a colored status-bar-style block + accent hint.
-# Falls back to a plain dim row when truecolor isn't available.
-_vt_colored_block() {
-  local name="$1" bg_hex="$2" fg_hex="$3" accent_hex="$4"
+# Format a single theme row (colored status-bar-style block + accent hint) into
+# the variable named by $1, with no trailing newline. The caller supplies the
+# leading prefix so it can express e.g. selection cursors. Falls back to a dim
+# plain row when truecolor isn't available.
+_vt_format_block() {
+  local out_var="$1" prefix="$2" name="$3" bg_hex="$4" fg_hex="$5" accent_hex="$6"
   local padded
   padded=$(printf " %-20s " "$name")
   if _vt_supports_truecolor && [[ -n "$bg_hex" && -n "$fg_hex" ]]; then
@@ -71,19 +74,27 @@ _vt_colored_block() {
     read -r bR bG bB <<< "$(_vt_hex_to_rgb "$bg_hex")"
     if [[ -n "$accent_hex" ]]; then
       read -r aR aG aB <<< "$(_vt_hex_to_rgb "$accent_hex")"
-      printf "  \033[38;2;%d;%d;%dm\033[48;2;%d;%d;%dm%s\033[0m  \033[90maccent\033[0m \033[38;2;%d;%d;%dm%s\033[0m\n" \
-        "$fR" "$fG" "$fB" "$bR" "$bG" "$bB" "$padded" "$aR" "$aG" "$aB" "$accent_hex"
+      printf -v "$out_var" '%s\033[38;2;%d;%d;%dm\033[48;2;%d;%d;%dm%s\033[0m  \033[90maccent\033[0m \033[38;2;%d;%d;%dm%s\033[0m' \
+        "$prefix" "$fR" "$fG" "$fB" "$bR" "$bG" "$bB" "$padded" "$aR" "$aG" "$aB" "$accent_hex"
     else
-      printf "  \033[38;2;%d;%d;%dm\033[48;2;%d;%d;%dm%s\033[0m\n" \
-        "$fR" "$fG" "$fB" "$bR" "$bG" "$bB" "$padded"
+      printf -v "$out_var" '%s\033[38;2;%d;%d;%dm\033[48;2;%d;%d;%dm%s\033[0m' \
+        "$prefix" "$fR" "$fG" "$fB" "$bR" "$bG" "$bB" "$padded"
     fi
   else
     if [[ -n "$accent_hex" ]]; then
-      _vt_dim "• $name  (accent $accent_hex)"
+      printf -v "$out_var" '%s\033[90m• %s  (accent %s)\033[0m' "$prefix" "$name" "$accent_hex"
     else
-      _vt_dim "• $name"
+      printf -v "$out_var" '%s\033[90m• %s\033[0m' "$prefix" "$name"
     fi
   fi
+}
+
+# Print a single theme's row as a colored block + accent hint, with the same
+# 2-space indent the rest of the tool uses. Wraps `_vt_format_block`.
+_vt_colored_block() {
+  local _vt_line=""
+  _vt_format_block _vt_line "  " "$1" "$2" "$3" "$4"
+  printf '%s\n' "$_vt_line"
 }
 
 # Resolve global settings.json path (handles both standard and portable VSCode)
@@ -244,6 +255,81 @@ print(status)
 PYEOF
 }
 
+# ── interactive picker helpers ────────────────────────────────────────────────
+
+# Pick the shortest escape-sequence timeout the current shell accepts.
+# Bash 4+ and modern zsh accept fractional -t; bash 3.2 requires integer.
+if [[ -n "$ZSH_VERSION" ]]; then
+  _VT_ESC_T=0.05
+elif [[ "${BASH_VERSINFO[0]:-0}" -ge 4 ]]; then
+  _VT_ESC_T=0.05
+else
+  _VT_ESC_T=1
+fi
+
+# Read exactly one raw byte (no echo, no IFS splitting) into REPLY.
+# Portable across bash and zsh.
+_vt_read1() {
+  if [[ -n "$ZSH_VERSION" ]]; then
+    read -sk 1
+  else
+    IFS= read -rsn1
+  fi
+}
+
+# Read up to 2 more bytes with a short timeout, for disambiguating escape
+# sequences (e.g. "\x1b[A"). Sets REPLY to "" if no bytes were available.
+_vt_read_rest() {
+  REPLY=""
+  if [[ -n "$ZSH_VERSION" ]]; then
+    read -sk 2 -t "$_VT_ESC_T" 2>/dev/null || REPLY=""
+  else
+    IFS= read -rsn2 -t "$_VT_ESC_T" 2>/dev/null || REPLY=""
+  fi
+}
+
+# Silent wrapper around _vt_merge_settings, for live previews.
+_vt_apply_silent() {
+  _vt_merge_settings "$1" "$2" "$3" >/dev/null 2>&1
+}
+
+# Snapshot the target settings file before previewing.
+# Prints "exists:<tmpfile>" when the file was present, or "absent" otherwise.
+_vt_snapshot_settings() {
+  local settings_file="$1"
+  if [[ -f "$settings_file" ]]; then
+    local tmp
+    tmp="$(mktemp 2>/dev/null || echo "${TMPDIR:-/tmp}/vscode-theme-snap.$$.$RANDOM")"
+    cp "$settings_file" "$tmp"
+    echo "exists:$tmp"
+  else
+    echo "absent"
+  fi
+}
+
+# Restore (or delete) the settings file back to its pre-picker state.
+_vt_restore_settings() {
+  local settings_file="$1" snapshot="$2"
+  case "$snapshot" in
+    exists:*)
+      local tmp="${snapshot#exists:}"
+      mkdir -p "$(dirname "$settings_file")"
+      cp "$tmp" "$settings_file"
+      rm -f "$tmp"
+      ;;
+    absent)
+      rm -f "$settings_file"
+      ;;
+  esac
+}
+
+# Throw away a snapshot without restoring (user confirmed the new theme).
+_vt_discard_snapshot() {
+  case "$1" in
+    exists:*) rm -f "${1#exists:}" ;;
+  esac
+}
+
 # ── subcommands ───────────────────────────────────────────────────────────────
 
 _vt_cmd_list() {
@@ -306,6 +392,178 @@ _vt_cmd_status() {
   echo ""
 }
 
+_vt_cmd_set_interactive() {
+  local is_global="$1"
+  local settings_file scope
+  if [[ "$is_global" -eq 1 ]]; then
+    settings_file="$(_vt_global_settings_path)"
+    scope="global"
+  else
+    settings_file="$(_vt_workspace_settings_path)"
+    scope="workspace"
+  fi
+
+  if [[ ! -d "$VSCODE_THEME_DIR" ]]; then
+    _vt_err "Theme directory not found: ${VSCODE_THEME_DIR}"
+    return 1
+  fi
+
+  local themes=() bgs=() fgs=() accents=() f tf
+  for f in "$VSCODE_THEME_DIR"/*.json; do
+    [[ -f "$f" ]] || continue
+    tf="$(basename "$f" .json)"
+    themes+=("$tf")
+    bgs+=("$(_vt_read_color "$f" "statusBar.background")")
+    fgs+=("$(_vt_read_color "$f" "statusBar.foreground")")
+    accents+=("$(_vt_read_color "$f" "activityBar.foreground")")
+  done
+  local count=${#themes[@]}
+  if [[ "$count" -eq 0 ]]; then
+    _vt_err "No theme files found in ${VSCODE_THEME_DIR}"
+    return 1
+  fi
+
+  # Start on the currently-managed theme if possible, else the first one.
+  local current; current="$(_vt_read_managed_theme "$settings_file")"
+  local idx=0 i
+  if [[ -n "$current" ]]; then
+    for ((i=0; i<count; i++)); do
+      if [[ "${themes[$i]}" == "$current" ]]; then
+        idx=$i
+        break
+      fi
+    done
+  fi
+
+  _vt_h "Select a theme for ${scope}"
+  _vt_dim "Up/Down or j/k to navigate · Enter to confirm · Esc or q to cancel"
+  echo ""
+
+  # Viewport: when the theme list is taller than the terminal, only render a
+  # window of `body_height` rows that always contains `idx`, with up/down hint
+  # lines indicating how many more themes are off-screen.
+  local term_h=${LINES:-0}
+  if (( term_h <= 0 )); then
+    term_h=$(tput lines 2>/dev/null || echo 24)
+  fi
+  local vh=$((term_h - 6))   # 3 header lines + 2 indicator lines + 1 prompt slot
+  (( vh < 3 )) && vh=3
+  local body_height=$count
+  (( body_height > vh )) && body_height=$vh
+  local show_scroll=0
+  (( count > body_height )) && show_scroll=1
+  local lines_per_frame=$body_height
+  (( show_scroll )) && lines_per_frame=$((body_height + 2))
+
+  # Anchor `top` so the initial `idx` (which may be the currently-managed theme)
+  # is inside the visible window.
+  local top=0
+  if (( idx >= top + body_height )); then
+    top=$((idx - body_height + 1))
+  fi
+  if (( count > body_height )) && (( top > count - body_height )); then
+    top=$((count - body_height))
+  fi
+  (( top < 0 )) && top=0
+
+  mkdir -p "$(dirname "$settings_file")"
+  local snapshot; snapshot="$(_vt_snapshot_settings "$settings_file")"
+
+  # Apply the starting preview so VSCode reflects the highlighted row immediately.
+  _vt_apply_silent "${VSCODE_THEME_DIR}/${themes[$idx]}.json" "$settings_file" "${themes[$idx]}"
+
+  # Ctrl-C while read() is blocked: trap fires, flag gets set, read returns ≠0,
+  # loop checks the flag and treats it as a cancel.
+  _vt_int_flag=0
+  trap '_vt_int_flag=1' INT
+
+  local cancelled=0 first=1 rest key end below
+  while true; do
+    if [[ $first -eq 1 ]]; then
+      first=0
+    else
+      # Move cursor up by however many lines we wrote last frame, then clear.
+      printf '\033[%dA\033[J' "$lines_per_frame"
+    fi
+
+    if (( show_scroll )); then
+      if (( top > 0 )); then
+        printf '  \033[90m↑ %d more above\033[0m\n' "$top"
+      else
+        printf '\n'
+      fi
+    fi
+
+    local _vt_line=""
+    end=$((top + body_height))
+    for ((i = top; i < end; i++)); do
+      if [[ $i -eq $idx ]]; then
+        _vt_format_block _vt_line $'  \033[36m▸\033[0m ' "${themes[$i]}" "${bgs[$i]}" "${fgs[$i]}" "${accents[$i]}"
+      else
+        _vt_format_block _vt_line "    " "${themes[$i]}" "${bgs[$i]}" "${fgs[$i]}" "${accents[$i]}"
+      fi
+      printf '%s\n' "$_vt_line"
+    done
+
+    if (( show_scroll )); then
+      below=$((count - end))
+      if (( below > 0 )); then
+        printf '  \033[90m↓ %d more below\033[0m\n' "$below"
+      else
+        printf '\n'
+      fi
+    fi
+
+    _vt_read1
+    key="$REPLY"
+    if [[ $_vt_int_flag -eq 1 ]]; then
+      cancelled=1
+      break
+    fi
+
+    case "$key" in
+      $'\x1b')
+        _vt_read_rest
+        rest="$REPLY"
+        case "$rest" in
+          '[A') (( idx > 0 ))          && idx=$((idx - 1)) ;;
+          '[B') (( idx < count - 1 ))  && idx=$((idx + 1)) ;;
+          '')   cancelled=1; break ;;   # plain Escape
+        esac
+        ;;
+      '')     break ;;                  # Enter
+      k|K)    (( idx > 0 ))         && idx=$((idx - 1)) ;;
+      j|J)    (( idx < count - 1 )) && idx=$((idx + 1)) ;;
+      q|Q)    cancelled=1; break ;;
+    esac
+
+    # Scroll the viewport just enough to keep `idx` visible.
+    (( idx < top ))                   && top=$idx
+    (( idx >= top + body_height ))    && top=$((idx - body_height + 1))
+    (( top < 0 ))                     && top=0
+    if (( count > body_height )) && (( top > count - body_height )); then
+      top=$((count - body_height))
+    fi
+
+    _vt_apply_silent "${VSCODE_THEME_DIR}/${themes[$idx]}.json" "$settings_file" "${themes[$idx]}"
+  done
+
+  trap - INT
+  echo ""
+
+  if [[ $cancelled -eq 1 ]]; then
+    _vt_restore_settings "$settings_file" "$snapshot"
+    _vt_info "Cancelled. Reverted to previous ${scope} state."
+    echo ""
+    return 0
+  fi
+
+  _vt_discard_snapshot "$snapshot"
+  _vt_ok "Theme ${_vscode_theme_color_cyan}${themes[$idx]}${_vscode_theme_color_reset} applied to ${scope}."
+  _vt_dim "Reload VSCode window if colors didn't update (Cmd/Ctrl+Shift+P → Reload Window)."
+  echo ""
+}
+
 _vt_cmd_set() {
   local theme_name="" is_global=0
 
@@ -319,9 +577,8 @@ _vt_cmd_set() {
   done
 
   if [[ -z "$theme_name" ]]; then
-    _vt_err "Usage: vscode-theme set <name> [-g | --global]"
-    _vt_cmd_list
-    return 1
+    _vt_cmd_set_interactive "$is_global"
+    return $?
   fi
 
   local theme_file="${VSCODE_THEME_DIR}/${theme_name}.json"
@@ -468,11 +725,16 @@ _vt_usage() {
   echo "        Show the currently applied theme for both global and workspace"
   echo "        settings, including whether a pre-existing backup is stored."
   echo ""
-  echo -e "    ${_vscode_theme_color_cyan}set${_vscode_theme_color_reset} <theme-name> [-g | --global]"
+  echo -e "    ${_vscode_theme_color_cyan}set${_vscode_theme_color_reset} [theme-name] [-g | --global]"
   echo "        Apply a theme by name (the JSON filename without .json)."
   echo "        Defaults to workspace scope. Use -g / --global for global scope."
   echo "        If colorCustomizations already exist and were not set by this"
   echo "        tool, they are backed up inside settings.json before overwriting."
+  echo ""
+  echo "        Omit <theme-name> to open an interactive picker:"
+  echo "          Up/Down or j/k to navigate (theme applies live on each step)"
+  echo "          Enter          to confirm"
+  echo "          Esc or q       to cancel and revert to the previous state"
   echo ""
   echo -e "    ${_vscode_theme_color_cyan}reset${_vscode_theme_color_reset} [-g | --global]"
   echo "        Remove the applied theme from workspace (default) or global"
@@ -495,6 +757,8 @@ _vt_usage() {
   echo ""
   echo -e "  ${_vscode_theme_color_bold}EXAMPLES${_vscode_theme_color_reset}"
   echo "    vscode-theme list"
+  echo "    vscode-theme set                             # interactive picker"
+  echo "    vscode-theme set -g                          # picker, global scope"
   echo "    vscode-theme set navy-orange"
   echo "    vscode-theme set squidink-yellow --global"
   echo "    vscode-theme status"
