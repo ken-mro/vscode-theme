@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 640 296" xmlns="http://www.w3.org/2000/svg" width="640" height="296" font-family="Menlo, Consolas, monospace" role="img" aria-label="Paper light theme preview">
+  <defs><clipPath id="ci-clip"><rect width="640" height="296" rx="10" ry="10"/></clipPath></defs>
+  <g clip-path="url(#ci-clip)">
+    <rect width="640" height="296" fill="#FAF6EE"/>
+    <!-- Title bar -->
+    <rect width="640" height="28" fill="#E8DFCC"><title>titleBar.activeBackground &#8212; #E8DFCC</title></rect>
+    <rect y="26" width="640" height="2" fill="#A0522D"/>
+    <circle cx="19" cy="14" r="5" fill="#ff5f57"/>
+    <circle cx="34" cy="14" r="5" fill="#febc2e"/>
+    <circle cx="49" cy="14" r="5" fill="#28c840"/>
+    <text x="320" y="18" text-anchor="middle" font-size="11" fill="#8a7560"><title>titleBar.inactiveForeground &#8212; #8a7560</title>vscode-theme &#8212; VS Code</text>
+    <!-- Activity bar -->
+    <rect y="28" width="36" height="150" fill="#F0EADC"><title>activityBar.background &#8212; #F0EADC</title></rect>
+    <rect x="9" y="36" width="18" height="18" rx="3" fill="#A0522D"><title>activityBar.foreground &#8212; #A0522D</title></rect>
+    <rect x="9" y="64" width="18" height="18" rx="3" fill="#8a7560" opacity="0.55"><title>activityBar.inactiveForeground &#8212; #8a7560</title></rect>
+    <rect x="9" y="92" width="18" height="18" rx="3" fill="#8a7560" opacity="0.55"><title>activityBar.inactiveForeground &#8212; #8a7560</title></rect>
+    <!-- Sidebar -->
+    <rect x="36" y="28" width="160" height="150" fill="#F5F0E2"><title>sideBar.background &#8212; #F5F0E2</title></rect>
+    <rect x="195" y="28" width="1" height="150" fill="#D8CFB8"/>
+    <text x="46" y="46" font-size="10" font-weight="700" letter-spacing="0.8" fill="#A0522D"><title>sideBarTitle.foreground &#8212; #A0522D</title>エクスプローラー</text>
+    <rect x="36" y="56" width="159" height="18" fill="#A0522D" fill-opacity="0.133"><title>list.activeSelectionBackground &#8212; #A0522D</title></rect>
+    <text x="58" y="69" font-size="11" fill="#A0522D"><title>list.activeSelectionForeground &#8212; #A0522D</title>settings.json</text>
+    <text x="58" y="88" font-size="11" fill="#3a2818"><title>sideBar.foreground &#8212; #3a2818</title>src/index.ts</text>
+    <text x="58" y="107" font-size="11" fill="#3a2818"><title>sideBar.foreground &#8212; #3a2818</title>package.json</text>
+    <!-- Editor -->
+    <rect x="196" y="28" width="444" height="150" fill="#FAF6EE"><title>editor.background &#8212; #FAF6EE</title></rect>
+    <rect x="196" y="28" width="444" height="22" fill="#ECE4D0"><title>editorGroupHeader.tabsBackground &#8212; #ECE4D0</title></rect>
+    <rect x="196" y="49" width="444" height="1" fill="#D8CFB8"/>
+    <rect x="196" y="28" width="98" height="22" fill="#FAF6EE"><title>tab.activeBackground &#8212; #FAF6EE</title></rect>
+    <rect x="196" y="28" width="98" height="2" fill="#A0522D"><title>tab.activeBorderTop &#8212; #A0522D</title></rect>
+    <text x="210" y="44" font-size="11" fill="#3a2818">settings.json</text>
+    <text x="308" y="44" font-size="11" fill="#6a5240"><title>tab.inactiveForeground &#8212; #6a5240</title>index.ts</text>
+    <!-- Code lines -->
+    <text x="216" y="73" font-size="11" fill="#a89a7a"><title>editorLineNumber.foreground &#8212; #a89a7a</title>1</text>
+    <text x="232" y="73" font-size="11" fill="#A0522D">&quot;workbench.colorCustomizations&quot;</text>
+    <text x="426" y="73" font-size="11" fill="#3a2818">: {</text>
+    <text x="216" y="92" font-size="11" fill="#a89a7a">2</text>
+    <text x="246" y="92" font-size="11" fill="#A0522D">&quot;titleBar.activeBackground&quot;</text>
+    <text x="416" y="92" font-size="11" fill="#3a2818">:</text>
+    <text x="424" y="92" font-size="11" fill="#A0522D"><title>textLink.foreground &#8212; #A0522D</title>&quot;#E8DFCC&quot;</text>
+    <text x="216" y="111" font-size="11" fill="#a89a7a">3</text>
+    <text x="232" y="111" font-size="11" fill="#3a2818">}</text>
+    <!-- Panel -->
+    <rect y="178" width="640" height="96" fill="#F5F0E2"><title>panel.background &#8212; #F5F0E2</title></rect>
+    <rect y="203" width="640" height="1" fill="#D8CFB8"/>
+    <text x="14" y="194" font-size="10" font-weight="700" letter-spacing="0.8" fill="#8a7560"><title>panelTitle.inactiveForeground &#8212; #8a7560</title>問題</text>
+    <text x="50" y="194" font-size="10" font-weight="700" letter-spacing="0.8" fill="#8a7560">出力</text>
+    <text x="86" y="194" font-size="10" font-weight="700" letter-spacing="0.8" fill="#8a7560">デバッグ コンソール</text>
+    <text x="210" y="194" font-size="10" font-weight="700" letter-spacing="0.8" fill="#3a2818"><title>panelTitle.activeForeground &#8212; #3a2818</title>ターミナル</text>
+    <text x="270" y="194" font-size="10" font-weight="700" letter-spacing="0.8" fill="#8a7560">GITLENS</text>
+    <rect x="210" y="203" width="56" height="1" fill="#A0522D"><title>panelTitle.activeBorder &#8212; #A0522D</title></rect>
+    <!-- Terminal -->
+    <text x="14" y="225" font-size="11" fill="#3a2818"><title>terminal.foreground &#8212; #3a2818</title>PS C:\experiment\vscode-theme&gt; vscode-theme set paper-light</text>
+    <text x="14" y="241" font-size="11" font-weight="700" fill="#3D6B2E"><title>terminal.ansiGreen &#8212; #3D6B2E</title>&#10003;</text>
+    <text x="26" y="241" font-size="11" fill="#3a2818">テーマをワークスペースに適用しました。</text>
+    <text x="14" y="257" font-size="11" fill="#3a2818">PS C:\experiment\vscode-theme&gt;</text>
+    <rect x="210" y="247" width="7" height="11" fill="#A0522D"><title>terminalCursor.foreground &#8212; #A0522D</title></rect>
+    <!-- Status bar -->
+    <rect y="274" width="640" height="22" fill="#E8DFCC"><title>statusBar.background &#8212; #E8DFCC</title></rect>
+    <rect y="274" width="640" height="1" fill="#A0522D" fill-opacity="0.333"/>
+    <text x="10" y="289" font-size="11" fill="#3a2818" opacity="0.85">main</text>
+    <text x="50" y="289" font-size="11" fill="#3a2818" opacity="0.85">問題なし</text>
+  </g>
+</svg>
