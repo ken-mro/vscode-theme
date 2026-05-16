@@ -115,17 +115,21 @@ _vt_global_settings_path() {
   fi
 }
 
-# Find .vscode/settings.json walking up from cwd
+# Find .vscode/settings.json walking up from cwd.
+# Note: we deliberately stop at $HOME — VSCode installs its own ~/.vscode/
+# (argv.json, cli/, extensions/) which is *not* a workspace folder, and
+# VSCode never reads settings.json from there. Walking into it would silently
+# write to a file VSCode ignores.
 _vt_workspace_settings_path() {
   local dir="$PWD"
-  while [[ "$dir" != "/" ]]; do
+  while [[ "$dir" != "/" && "$dir" != "$HOME" ]]; do
     if [[ -d "$dir/.vscode" ]]; then
       echo "$dir/.vscode/settings.json"
       return
     fi
     dir="$(dirname "$dir")"
   done
-  # No .vscode found — use current directory
+  # No workspace .vscode found — use current directory
   echo "$PWD/.vscode/settings.json"
 }
 
@@ -531,7 +535,7 @@ _vt_cmd_set_interactive() {
           '')   cancelled=1; break ;;   # plain Escape
         esac
         ;;
-      '')     break ;;                  # Enter
+      ''|$'\r'|$'\n') break ;;          # Enter (bash returns '', zsh returns $'\n')
       k|K)    (( idx > 0 ))         && idx=$((idx - 1)) ;;
       j|J)    (( idx < count - 1 )) && idx=$((idx + 1)) ;;
       q|Q)    cancelled=1; break ;;

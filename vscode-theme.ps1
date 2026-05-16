@@ -116,15 +116,19 @@ function _VT-GlobalSettingsPath {
 }
 
 function _VT-WorkspaceSettingsPath {
+    # Note: we deliberately stop at $HOME — VSCode installs its own ~/.vscode/
+    # (argv.json, cli/, extensions/) which is *not* a workspace folder, and
+    # VSCode never reads settings.json from there. Walking into it would
+    # silently write to a file VSCode ignores.
     $dir = Get-Location | Select-Object -ExpandProperty Path
-    while ($dir -and $dir -ne [System.IO.Path]::GetPathRoot($dir)) {
+    while ($dir -and $dir -ne [System.IO.Path]::GetPathRoot($dir) -and $dir -ne $HOME) {
         $vscodeDir = Join-Path $dir '.vscode'
         if (Test-Path $vscodeDir -PathType Container) {
             return Join-Path $vscodeDir 'settings.json'
         }
         $dir = Split-Path $dir -Parent
     }
-    # No .vscode found — use current directory
+    # No workspace .vscode found — use current directory
     return Join-Path (Get-Location) '.vscode\settings.json'
 }
 
